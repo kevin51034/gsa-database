@@ -1,55 +1,88 @@
-<!--
-You should NOT have to modify this file for the assignment!
--->
-
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
     <title>Spreadsheet Tester</title>
-    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
     <script src="js/script.js" defer></script>
+
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" defer></script>
+
+    <script>
+        
     </script>
 
-  </head>
 
-  <body>
+
+</head>
+
+
+
+<body>
     <section>
-      <h1>Spreadsheet test UI</h1>
-      <fieldset>
-        <form>
-          <p>
-            API Path: <input type="text" id="path-input" value="/api" />
-          </p>
-          <p>
-            Method:
-            <select id="method-input">
-              <option>GET</option>
-              <option>DELETE</option>
-              <option>POST</option>
-              <option>PATCH</option>
-            </select>
-          </p>
-          <p>
-            Body data: <button id="add-button">Add</button>
-            <div id="key-values"></div>
-          </p>
-          <p>
-            Request preview:<br/>
-            <pre id="preview-area" contenteditable readonly></pre>
-          </p>
-          <p>
-            <input type="submit" id="fetch-button" value="Fetch!"/>
-          </p>
-        </form>
-      </fieldset>
-      <section id="results-container" class="hidden">
-        <hr/>
-        <h2>Fetch results:</h2>
-        <pre id="results"></pre>
-      </section>
+        <h1>Spreadsheet test UI</h1>
+        <fieldset>
+            <form>
+                <p>
+                    API Path: <input type="text" id="path-input" value="/api" />
+                </p>
+                <p>
+                    Method:
+                    <select id="method-input">
+                        <option>GET</option>
+                        <option>DELETE</option>
+                        <option>POST</option>
+                        <option>PATCH</option>
+                    </select>
+                </p>
+                <p>
+                    Body data: <button id="add-button">Add</button>
+                    <div id="key-values"></div>
+                </p>
+                <p>
+                    Request preview:<br />
+                    <pre id="preview-area" contenteditable readonly></pre>
+                </p>
+                <p>
+                    <input type="submit" id="fetch-button" value="Fetch!" />
+                </p>
+            </form>
+        </fieldset>
+
+        <table id="datatable" class="display hidden">
+            <thead>
+                <tr>
+                    <th>中心id</th>
+                    <th>姓名</th>
+                    <th>學員證字號</th>
+                    <th>樂齡學習中心名稱</th>
+                    <th>社區</th>
+                    <th>簽到時間</th>
+                    <th>簽退時間</th>
+                    <th>課程id</th>
+                    <th>課程主題</th>
+                    <th>課程名稱</th>
+                    <th>課程地點地址</th>
+                    <th>課程日期mmddyyyy</th>
+                    <th>課程類型</th>
+                    <th>身分證字號</th>
+                </tr>
+            </thead>
+        </table>
+
+        <section id="results-container" class="hidden">
+            <hr />
+            <h2>Fetch results:</h2>
+            <pre id="results"></pre>
+        </section>
     </section>
-  </body>
+</body>
+
 </html>
