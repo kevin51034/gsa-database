@@ -1,10 +1,17 @@
 (() => {
     async function onSubmit(event) {
         event.preventDefault();
+
+        const loading = document.querySelector('#loading');
+        loading.classList.remove('hidden');
+
         const resultsDiv = document.querySelector('#results');
         resultsDiv.innerHTML = '';
 
         const info = getParameters();
+
+        //console.log(info.path);
+        //console.log(info.options);
 
         const response = await fetch(info.path, info.options);
         const json = await response.json();
@@ -117,6 +124,8 @@
         resultsContainer.classList.remove('hidden');
         const datatable = document.querySelector('#datatable');
         datatable.classList.remove('hidden');
+
+        loading.classList.add('hidden');
     }
 
     function addKeyValueInput() {
@@ -148,6 +157,67 @@
         container.append(removeButton);
         const keysContainer = document.querySelector('#key-values');
         keysContainer.append(container);
+    }
+
+    async function onPostform(event){
+        event.preventDefault();
+        const path = '/api';
+
+        const options = {
+            method: 'POST'
+        };
+
+        //POST
+        //const formDataContainer = document.querySelector('#form-values');
+        //const allRows = bodyDataContainer.querySelectorAll('.body-row');
+        const bodyObj = {};
+
+            const studentName = document.querySelector('.studentName')
+            const studentID = document.querySelector('.studentID')
+            const classDate = document.querySelector('.classDate')
+            const signinTime = document.querySelector('.signinTime')
+            const signoutTime = document.querySelector('.signoutTime')
+
+            const centerName = document.querySelector('.centerName')
+            const courseName = document.querySelector('.courseName')
+
+            bodyObj[studentName.name] = studentName.value.trim();
+            bodyObj[studentID.name] = studentID.value.trim();
+            bodyObj[classDate.name] = classDate.value.trim();
+            bodyObj[signinTime.name] = signinTime.value.trim();
+            bodyObj[signoutTime.name] = signoutTime.value.trim();
+            bodyObj[centerName.name] = centerName.options[centerName.selectedIndex].value;
+            bodyObj[courseName.name] = courseName.options[courseName.selectedIndex].value;
+
+            console.log(bodyObj);
+            //input 3~10 10 is note
+            //console.log(document.getElementsByTagName("input")[3].value);
+
+            // transfer object to JSON and post
+
+            const bodySize = Object.keys(bodyObj).length;
+            if (bodyObj[studentName.name] && bodyObj[studentID.name] && bodyObj[classDate.name]
+                && bodyObj[signinTime.name] && bodyObj[signoutTime.name]
+                && bodyObj[centerName.name] && bodyObj[courseName.name]) {
+                options.body = JSON.stringify(bodyObj);
+                options.headers = {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                };
+
+                const response = await fetch(path, options);
+                const json = await response.json();
+                console.log(json);
+
+            }
+
+            studentName.value='';
+            studentID.value='';
+            console.log(path);
+            console.log(options);
+
+
+
     }
 
     function getParameters() {
@@ -206,7 +276,10 @@
         addKeyValueInput();
     });
 
-    const form = document.querySelector('form');
+    const postButton = document.querySelector('#form-value');
+    postButton.addEventListener('submit', onPostform);
+
+    const form = document.querySelector('.fetchForm');
     form.addEventListener('submit', onSubmit);
     createRequestPreview();
 
