@@ -9,6 +9,8 @@
     <link rel="stylesheet" type="text/css" href="css/style.css" />
     <script src="js/script.js" defer></script>
 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
     </script>
@@ -16,7 +18,7 @@
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" defer></script>
 
     <script>
-        
+
     </script>
 
 
@@ -29,6 +31,7 @@
     <section>
         <h1>Spreadsheet test UI</h1>
         <fieldset>
+
             <form>
                 <p>
                     API Path: <input type="text" id="path-input" value="/api" />
@@ -46,6 +49,9 @@
                     Body data: <button id="add-button">Add</button>
                     <div id="key-values"></div>
                 </p>
+
+
+
                 <p>
                     Request preview:<br />
                     <pre id="preview-area" contenteditable readonly></pre>
@@ -54,7 +60,110 @@
                     <input type="submit" id="fetch-button" value="Fetch!" />
                 </p>
             </form>
+
+            <form class="needs-validation" id="form-value" novalidate>
+                <div class="form-row">
+                    <div class="col-md-4 mb-3">
+                        <label for="validationCustom01">姓名</label>
+                        <input type="text" class="form-control studentName" id="validationCustom01 studentName" name="姓名" placeholder="王小明" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="validationCustom02">學員證字號</label>
+                        <input type="text" class="form-control studentID" id="validationCustom02" placeholder="1070001-X" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                            <label for="validationCustom02">課程日期mm-dd-yyyy</label>
+                            <input type="text" class="form-control classDate" id="validationCustom02" placeholder="12-31-2019" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                                <label for="validationCustom02">簽到時間</label>
+                                <input type="text" class="form-control signinTime" id="validationCustom02" placeholder="9:15" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                    <label for="validationCustom02">簽退時間</label>
+                                    <input type="text" class="form-control signoutTime" id="validationCustom02" placeholder="10:55" required>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                </div>
+                </div>
+                <div class="form-row">
+                    
+                    <div class="col-md-3 mb-3">
+                        <label for="validationCustom04">樂齡學習中心名稱</label>
+                        <select class="custom-select" id="validationCustom04" required>
+                            <option selected disabled value="">Choose...</option>
+                            <option>...</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Please select a valid state.
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                            <label for="validationCustom04">課程名稱</label>
+                            <select class="custom-select" id="validationCustom04" required>
+                                <option selected disabled value="">Choose...</option>
+                                <option>...</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Please select a valid state.
+                            </div>
+                        </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="validationCustom05">備註</label>
+                        <input type="text" class="form-control" id="validationCustom05" >
+                        <div class="invalid-feedback">
+                            Please provide a valid zip.
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" id='postButton' type="submit">Submit form</button>
+            </form>
+
+            <script>
+                // Example starter JavaScript for disabling form submissions if there are invalid fields
+                (function () {
+                    'use strict';
+                    window.addEventListener('load', function () {
+                        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                        var forms = document.getElementsByClassName('needs-validation');
+                        // Loop over them and prevent submission
+                        var validation = Array.prototype.filter.call(forms, function (form) {
+                            form.addEventListener('submit', function (event) {
+                                if (form.checkValidity() === false) {
+                                    event.preventDefault();
+                                    event.stopPropagation();
+                                }
+                                form.classList.add('was-validated');
+                            }, false);
+                        });
+                    }, false);
+                })();
+            </script>
+
+
         </fieldset>
+
+
+        <div class="text-center justify-content-center hidden" id="loading">
+            <strong>Loading... </strong>
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
 
         <table id="datatable" class="display hidden">
             <thead>
