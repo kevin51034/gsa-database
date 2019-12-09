@@ -11,6 +11,8 @@ const doc = new googlespreadsheet('<spreadsheet key>');
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.use(express.static('public'));
+
 async function onGet(req, res) {
     await promisify(doc.useServiceAccountAuth)(creds);
     const info = await promisify(doc.getInfo)();
@@ -19,28 +21,17 @@ async function onGet(req, res) {
     //getRows return a object array
     //if limit = 1 then array length = 1
     const rows = await promisify(sheet.getRows)({
-        offset: 1,
+        offset: 2,
         limit: 500,
-        //query: '學員證字號 = 1070001-X'
-        query: '姓名 = '
     });
     //fetch name from ID
     console.log(rows[0].姓名);
-    //history
-    rows.forEach(row => {
-        console.log(row.課程名稱);
-        console.log(row.課程日期mmddyyyy);
-    })
-    //console.log(Object.keys(rows));
-    //console.log(rows[1].姓名);
-    //console.log(SpreadsheetRow.getRows)
-    //console.log(sheet);
-    //console.log(Object.prototype.toString.call(rows));
+
     res.json(rows);
 }
 app.get('/api', onGet);
 
-async function onGet(req, res) {
+async function onGetspecific(req, res) {
     await promisify(doc.useServiceAccountAuth)(creds);
     const info = await promisify(doc.getInfo)();
     sheet = info.worksheets[4];
@@ -56,7 +47,7 @@ async function onGet(req, res) {
         query: `姓名 = ${studentID}`
     });
     //fetch name from ID
-    console.log(rows[0].姓名);
+    //console.log(rows[0].姓名);
     //history
     rows.forEach(row => {
         console.log(row.課程名稱);
@@ -65,7 +56,9 @@ async function onGet(req, res) {
 
     res.json(rows);
 }
-app.get('/api/:ID', onGet);
+app.get('/api/:ID', onGetspecific);
+
+
 
 async function onPost(req, res) {
     await promisify(doc.useServiceAccountAuth)(creds);
