@@ -5,6 +5,9 @@
         const loading = document.querySelector('#loading');
         loading.classList.remove('hidden');
 
+
+
+
         const resultsDiv = document.querySelector('#results');
         resultsDiv.innerHTML = '';
 
@@ -29,8 +32,15 @@
             //console.log(prop + " = " + json[prop] + "\n");
         }
 
-        $('#datatable').DataTable({
+        
 
+        $('#datatable').DataTable({
+            dom: 'lBfrtip',
+            //"scrollX": true,
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print', 'colvis'
+            ],
+            
             data: json,
             columns: [{
                     data: '中心id'
@@ -70,9 +80,10 @@
                 //{ data: '課程類型' },
 
             ],
+
             //paging: false,
             //select: true,
-            //scrollY: 400
+            
 
             initComplete: function () {
                 this.api().columns().every( function () {
@@ -94,39 +105,47 @@
                     } );
                 } );
             },
+
+
         });
 
-        /* text searching
-        $('#datatablefoottext th').each(function () {
-            var title = $(this).text();
-            $(this).html('<input type="text" placeholder="Search ' + title + '" />');
-        });
-        var table = $('#datatable').DataTable();
-
-        // Apply the search
-        table.columns().every(function () {
-            var that = this;
-
-            $('input', this.footer()).on('keyup change clear', function () {
-                if (that.search() !== this.value) {
-                    that
-                        .search(this.value)
-                        .draw();
-                }
-            });
-        });*/
+        $('input.global_filter').on( 'keyup click', function () {
+            filterGlobal();
+        } );
+     
+        $('input.column_filter').on( 'keyup click', function () {
+            filterColumn( $(this).parents('tr').attr('data-column') );
+        } );
 
         resultsDiv.textContent = JSON.stringify(json, null, 2);
         //console.log(resultsDiv.textContent);
-
 
         const resultsContainer = document.querySelector('#results-container');
         resultsContainer.classList.remove('hidden');
         const datatable = document.querySelector('#datatable');
         datatable.classList.remove('hidden');
 
+        const filterButtondiv = document.querySelector('#filterButtondiv');
+        filterButtondiv.classList.remove('hidden');
         loading.classList.add('hidden');
     }
+
+    function filterGlobal () {
+        $('#datatable').DataTable().search(
+            $('#global_filter').val(),
+            $('#global_regex').prop('checked'),
+            $('#global_smart').prop('checked')
+        ).draw();
+    }
+     
+    function filterColumn ( i ) {
+        $('#datatable').DataTable().column( i ).search(
+            $('#col'+i+'_filter').val(),
+            $('#col'+i+'_regex').prop('checked'),
+            $('#col'+i+'_smart').prop('checked')
+        ).draw();
+    }
+
 
     function addKeyValueInput() {
         const container = document.createElement('div');
@@ -220,6 +239,17 @@
 
     }
 
+    async function changeFiltertable(event){
+        event.preventDefault();
+
+        const filterTable = document.querySelector('#filterTable');
+        if(filterTable.classList.contains('hidden')){
+            filterTable.classList.remove('hidden');
+        }
+        else{
+            filterTable.classList.add('hidden');
+        }
+    }
     function getParameters() {
         const path = pathInput.value.trim();
 
@@ -278,6 +308,11 @@
 
     const postButton = document.querySelector('#form-value');
     postButton.addEventListener('submit', onPostform);
+
+
+
+    const filterButton = document.querySelector('#filterButton');
+    filterButton.addEventListener('click', changeFiltertable);
 
     const form = document.querySelector('.fetchForm');
     form.addEventListener('submit', onSubmit);
