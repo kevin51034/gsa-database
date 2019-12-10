@@ -57,34 +57,36 @@
 
 
 <body>
-    
-        <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
-                <a class="navbar-brand" href="#">Navbar</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                  <ul class="navbar-nav">
-                    <li class="nav-item active">
-                      <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    <!--<li class="nav-item">
-                      <a class="nav-link" href="#">Features</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">Pricing</a>
+
+    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Spreadsheet test UI</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <!--<li class="nav-item">
+                        <a class="nav-link" href="#">Features</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                        <a class="nav-link" href="#">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
                     </li>-->
-                  </ul>
-                </div>
-              </nav>
+            </ul>
+        </div>
+    </nav>
+
     <section>
         <h1>Spreadsheet test UI</h1>
         <fieldset>
 
-            <form class='fetchForm'>
+            <!--<form class='fetchForm'>
                 <p>
                     API Path: <input type="text" id="path-input" value="/api" />
                 </p>
@@ -111,7 +113,9 @@
                 <p>
                     <input type="submit" id="fetch-button" value="Fetch!" />
                 </p>
-            </form>
+            </form>-->
+
+
 
             <form class="needs-validation" id="form-value" novalidate>
                 <div class="form-row">
@@ -133,7 +137,7 @@
                     </div>
                     <div class="col-md-4 mb-3">
                         <label for="validationCustom02">課程日期mm-dd-yyyy</label>
-                        <input type="text" class="form-control classDate" id="validationCustom02" name="課程日期mm-dd-yyyy"
+                        <input type="text" class="form-control classDate" id="validationCustom02" name="課程日期mmddyyyy"
                             placeholder="12-31-2019" required>
                         <div class="valid-feedback">
                             Looks good!
@@ -156,8 +160,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-row">
 
+                <div class="form-row">
                     <div class="col-md-3 mb-3">
                         <label for="validationCustom04">樂齡學習中心名稱</label>
                         <select class="custom-select centerName" id="validationCustom04" name="樂齡學習中心名稱" required>
@@ -177,14 +181,11 @@
 
                         </select>
                         <div class="invalid-feedback"></div>
-                            Please select a valid state.
-                        </div>
                     </div>
                     <div class="col-md-3 mb-3">
                         <label for="validationCustom05">備註</label>
                         <input type="text" class="form-control" id="validationCustom05">
                         <div class="invalid-feedback">
-                            Please provide a valid zip.
                         </div>
                     </div>
                 </div>
@@ -194,34 +195,14 @@
 
             <br><br>
 
-
-
-
-
-            <script>
-                // Example starter JavaScript for disabling form submissions if there are invalid fields
-                (function () {
-                    'use strict';
-                    window.addEventListener('load', function () {
-                        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                        var forms = document.getElementsByClassName('needs-validation');
-                        // Loop over them and prevent submission
-                        var validation = Array.prototype.filter.call(forms, function (form) {
-                            form.addEventListener('submit', function (event) {
-                                if (form.checkValidity() === false) {
-                                    event.preventDefault();
-                                    event.stopPropagation();
-                                }
-                                form.classList.add('was-validated');
-                            }, false);
-                        });
-                    }, false);
-                })();
-            </script>
-
-
         </fieldset>
 
+
+        <form class='fetchForm'>
+                <p>
+                    <input type="submit" id="fetch-button" value="Fetch!" />
+                </p>
+            </form>
 
         <div class="text-center justify-content-center hidden" id="loading">
             <strong>Loading... </strong>
@@ -244,28 +225,8 @@
                     <th>課程日期mmddyyyy</th>
                     <th>簽到時間</th>
                     <th>簽退時間</th>
-
-                    <!--<th>課程地點地址</th>
-                    <th>課程主題</th>
-                    <th>課程類型</th>-->
                 </tr>
             </thead>
-            <!--<tfoot id = 'datatablefoottext'>
-                <tr>
-                    <th>中心id</th>
-                    <th>姓名</th>
-                    <th>身分證字號</th>
-                    <th>學員證字號</th>
-                    <th>樂齡學習中心名稱</th>
-                    <th>社區</th>
-                    <th>課程id</th>
-                    <th>課程名稱</th>
-                    <th>課程日期mmddyyyy</th>
-                    <th>簽到時間</th>
-                    <th>簽退時間</th>
-                </tr>
-            </tfoot>-->
-
             <tfoot>
                 <tr>
                     <th>中心id</th>
@@ -281,13 +242,11 @@
                     <th>簽退時間</th>
                 </tr>
             </tfoot>
-
         </table>
+
         <div class='hidden' id='filterButtondiv'>
             <button type="button" class="btn btn-outline-dark" id='filterButton'>Search by column</button>
-
         </div>
-
 
         <table class='hidden' id='filterTable' cellpadding="3" cellspacing="0" border="0"
             style="width: 67%; margin: 0 auto 2em auto;">
