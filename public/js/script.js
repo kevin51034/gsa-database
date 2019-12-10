@@ -1,4 +1,6 @@
 (() => {
+
+    // get all data from sheet 4
     async function onSubmit(event) {
         event.preventDefault();
 
@@ -11,27 +13,23 @@
         const resultsDiv = document.querySelector('#results');
         resultsDiv.innerHTML = '';
 
-        const info = getParameters();
-
-        //console.log(info.path);
-        //console.log(info.options);
-
-        const response = await fetch(info.path, info.options);
+        const response = await fetch('/api', {
+            method: 'GET'
+        });
         const json = await response.json();
-        console.log(json);
-        //console.log(Object.keys(json[1]));
-        //console.log(Object.values(Object.keys(json[1]))[1]);
-        //console.log(Object.values(Object.values(Object.keys(json[1]))[1]));
-
-
+        
+        
+        
+        //const info = getParameters();
+        //const response = await fetch(info.path, info.options);
+        //const json = await response.json();
 
         $('#datatable').DataTable({
             dom: 'lBfrtip',
-            //"scrollX": true,
             buttons: [
                 'copy', 'csv', 'excel', 'pdf', 'print', 'colvis'
             ],
-
+            
             data: json,
             columns: [{
                     data: '中心id'
@@ -71,10 +69,6 @@
                 //{ data: '課程類型' },
 
             ],
-
-            //paging: false,
-            //select: true,
-
 
             initComplete: function () {
                 this.api().columns().every(function () {
@@ -223,7 +217,7 @@
 
         studentName.value = '';
         studentID.value = '';
-        console.log(path);
+        //console.log(path);
         console.log(options);
 
 
@@ -272,8 +266,19 @@
 
                     select.appendChild(option);
                 }
+                /*else if (rowKey[i] == '樂齡學習中心名稱' && rowValue[i]) {
+                    console.log('key = ' + rowKey[i]);
+                    console.log('value = ' + rowValue[i]);
+                    let option = document.createElement('option');
+                    option.text = rowValue[i];
+                    option.value = rowValue[i];
+                    let select = document.querySelector('.centerName');
+                    console.log(select);
+                    console.log(option);
+
+                    select.appendChild(option);
+                }*/
             }
-            //console.log(prop + " = " + json[prop] + "\n");
         }
     }
 
@@ -313,25 +318,21 @@
 
     function createRequestPreview() {
         const info = getParameters();
-        //console.log(info);
-
         const optionsPretty = JSON.stringify(info.options, null, 2);
-        //console.log(optionsPretty);
-
         const previewArea = document.querySelector('#preview-area');
         previewArea.innerHTML = `fetch('${info.path}', ${optionsPretty});`
     }
 
-    const pathInput = document.querySelector('#path-input');
-    pathInput.addEventListener('keyup', createRequestPreview);
-    const methodInput = document.querySelector('#method-input');
-    methodInput.addEventListener('change', createRequestPreview);
+    //const pathInput = document.querySelector('#path-input');
+    //pathInput.addEventListener('keyup', createRequestPreview);
+    //const methodInput = document.querySelector('#method-input');
+    //methodInput.addEventListener('change', createRequestPreview);
 
-    const addButton = document.querySelector('#add-button');
+    /*const addButton = document.querySelector('#add-button');
     addButton.addEventListener('click', (event) => {
         event.preventDefault();
         addKeyValueInput();
-    });
+    });*/
 
     const postButton = document.querySelector('#form-value');
     postButton.addEventListener('submit', onPostform);
@@ -344,7 +345,22 @@
     const form = document.querySelector('.fetchForm');
     form.addEventListener('submit', onSubmit);
 
+    window.addEventListener('load', function () {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName('needs-validation');
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function (form) {
+            form.addEventListener('submit', function (event) {
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    }, false);
+
     appendSelectOption();
-    createRequestPreview();
+    //createRequestPreview();
 
 })();
