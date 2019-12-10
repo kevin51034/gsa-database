@@ -13,14 +13,43 @@
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css" />
+
     </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" defer></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" defer></script>
+
+    <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.3.1.js" defer></script>
+    <script type="text/javascript" language="javascript"
+        src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" defer></script>
+    <script type="text/javascript" language="javascript"
+        src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js" defer></script>
+    <script type="text/javascript" language="javascript"
+        src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js" defer></script>
+
+    <script type="text/javascript" language="javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js" defer></script>
+    <script type="text/javascript" language="javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js" defer></script>
+    <script type="text/javascript" language="javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js" defer></script>
+    <script type="text/javascript" language="javascript"
+        src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js" defer></script>
+    <script type="text/javascript" language="javascript"
+        src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js" defer></script>
+    <script type="text/javascript" language="javascript"
+        src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.colVis.min.js" defer></script>
+
 
     <script>
 
     </script>
-
+    <style type="text/css">
+        .dt-buttons {
+            margin-left: 50px;
+        }
+    </style>
 
 
 </head>
@@ -28,11 +57,34 @@
 
 
 <body>
+    
+        <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand" href="#">Navbar</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav">
+                    <li class="nav-item active">
+                      <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <!--<li class="nav-item">
+                      <a class="nav-link" href="#">Features</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                    </li>-->
+                  </ul>
+                </div>
+              </nav>
     <section>
         <h1>Spreadsheet test UI</h1>
         <fieldset>
 
-            <form>
+            <form class='fetchForm'>
                 <p>
                     API Path: <input type="text" id="path-input" value="/api" />
                 </p>
@@ -65,65 +117,72 @@
                 <div class="form-row">
                     <div class="col-md-4 mb-3">
                         <label for="validationCustom01">姓名</label>
-                        <input type="text" class="form-control studentName" id="validationCustom01 studentName" name="姓名" placeholder="王小明" required>
+                        <input type="text" class="form-control studentName" id="validationCustom01 studentName"
+                            name="姓名" placeholder="王小明" required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
                         <label for="validationCustom02">學員證字號</label>
-                        <input type="text" class="form-control studentID" id="validationCustom02" placeholder="1070001-X" required>
+                        <input type="text" class="form-control studentID" id="validationCustom02" name="學員證字號"
+                            placeholder="1070001-X" required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
-                            <label for="validationCustom02">課程日期mm-dd-yyyy</label>
-                            <input type="text" class="form-control classDate" id="validationCustom02" placeholder="12-31-2019" required>
-                            <div class="valid-feedback">
-                                Looks good!
-                            </div>
+                        <label for="validationCustom02">課程日期mm-dd-yyyy</label>
+                        <input type="text" class="form-control classDate" id="validationCustom02" name="課程日期mm-dd-yyyy"
+                            placeholder="12-31-2019" required>
+                        <div class="valid-feedback">
+                            Looks good!
                         </div>
-                        <div class="col-md-4 mb-3">
-                                <label for="validationCustom02">簽到時間</label>
-                                <input type="text" class="form-control signinTime" id="validationCustom02" placeholder="9:15" required>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                    <label for="validationCustom02">簽退時間</label>
-                                    <input type="text" class="form-control signoutTime" id="validationCustom02" placeholder="10:55" required>
-                                    <div class="valid-feedback">
-                                        Looks good!
-                                    </div>
-                                </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="validationCustom02">簽到時間</label>
+                        <input type="text" class="form-control signinTime" id="validationCustom02" name="簽到時間"
+                            placeholder="9:15" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="validationCustom02">簽退時間</label>
+                        <input type="text" class="form-control signoutTime" id="validationCustom02" name="簽退時間"
+                            placeholder="10:55" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
                 </div>
                 <div class="form-row">
-                    
+
                     <div class="col-md-3 mb-3">
                         <label for="validationCustom04">樂齡學習中心名稱</label>
-                        <select class="custom-select" id="validationCustom04" required>
+                        <select class="custom-select centerName" id="validationCustom04" name="樂齡學習中心名稱" required>
                             <option selected disabled value="">Choose...</option>
-                            <option>...</option>
+                            <option>嘉義縣民雄鄉樂齡學習中心</option>
+                            <option>其他</option>
+
                         </select>
                         <div class="invalid-feedback">
                             Please select a valid state.
                         </div>
                     </div>
                     <div class="col-md-3 mb-3">
-                            <label for="validationCustom04">課程名稱</label>
-                            <select class="custom-select" id="validationCustom04" required>
-                                <option selected disabled value="">Choose...</option>
-                                <option>...</option>
-                            </select>
-                            <div class="invalid-feedback">
-                                Please select a valid state.
-                            </div>
+                        <label for="validationCustom04">課程名稱</label>
+                        <select class="custom-select courseName" id="validationCustom04" name="課程名稱" required>
+                            <option selected disabled value="">Choose...</option>
+
+                        </select>
+                        <div class="invalid-feedback"></div>
+                            Please select a valid state.
                         </div>
+                    </div>
                     <div class="col-md-3 mb-3">
                         <label for="validationCustom05">備註</label>
-                        <input type="text" class="form-control" id="validationCustom05" >
+                        <input type="text" class="form-control" id="validationCustom05">
                         <div class="invalid-feedback">
                             Please provide a valid zip.
                         </div>
@@ -132,6 +191,12 @@
 
                 <button class="btn btn-primary" id='postButton' type="submit">Submit form</button>
             </form>
+
+            <br><br>
+
+
+
+
 
             <script>
                 // Example starter JavaScript for disabling form submissions if there are invalid fields
@@ -217,6 +282,109 @@
                 </tr>
             </tfoot>
 
+        </table>
+        <div class='hidden' id='filterButtondiv'>
+            <button type="button" class="btn btn-outline-dark" id='filterButton'>Search by column</button>
+
+        </div>
+
+
+        <table class='hidden' id='filterTable' cellpadding="3" cellspacing="0" border="0"
+            style="width: 67%; margin: 0 auto 2em auto;">
+            <thead>
+                <tr>
+                    <th>Target</th>
+                    <th>Search text</th>
+                    <th>Treat as regex</th>
+                    <th>Use smart search</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="filter_global">
+                    <td>Global search</td>
+                    <td align="center"><input type="text" class="global_filter" id="global_filter"></td>
+                    <td align="center"><input type="checkbox" class="global_filter" id="global_regex"></td>
+                    <td align="center"><input type="checkbox" class="global_filter" id="global_smart" checked="checked">
+                    </td>
+                </tr>
+                <tr id="filter_col1" data-column="0">
+                    <td>Column - 中心id</td>
+                    <td align="center"><input type="text" class="column_filter" id="col0_filter"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col0_regex"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col0_smart" checked="checked">
+                    </td>
+                </tr>
+                <tr id="filter_col2" data-column="1">
+                    <td>Column - 姓名</td>
+                    <td align="center"><input type="text" class="column_filter" id="col1_filter"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col1_regex"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col1_smart" checked="checked">
+                    </td>
+                </tr>
+                <tr id="filter_col3" data-column="2">
+                    <td>Column - 身分證字號</td>
+                    <td align="center"><input type="text" class="column_filter" id="col2_filter"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col2_regex"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col2_smart" checked="checked">
+                    </td>
+                </tr>
+                <tr id="filter_col4" data-column="3">
+                    <td>Column - 學員證字號</td>
+                    <td align="center"><input type="text" class="column_filter" id="col3_filter"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col3_regex"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col3_smart" checked="checked">
+                    </td>
+                </tr>
+                <tr id="filter_col5" data-column="4">
+                    <td>Column - 樂齡學習中心名稱</td>
+                    <td align="center"><input type="text" class="column_filter" id="col4_filter"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col4_regex"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col4_smart" checked="checked">
+                    </td>
+                </tr>
+                <tr id="filter_col6" data-column="5">
+                    <td>Column - 社區</td>
+                    <td align="center"><input type="text" class="column_filter" id="col5_filter"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col5_regex"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col5_smart" checked="checked">
+                    </td>
+                </tr>
+                <tr id="filter_col7" data-column="6">
+                    <td>Column - 課程id</td>
+                    <td align="center"><input type="text" class="column_filter" id="col6_filter"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col6_regex"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col6_smart" checked="checked">
+                    </td>
+                </tr>
+                <tr id="filter_col8" data-column="7">
+                    <td>Column - 課程名稱</td>
+                    <td align="center"><input type="text" class="column_filter" id="col7_filter"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col7_regex"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col7_smart" checked="checked">
+                    </td>
+                </tr>
+                <tr id="filter_col9" data-column="8">
+                    <td>Column - 課程日期mmddyyyy</td>
+                    <td align="center"><input type="text" class="column_filter" id="col8_filter"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col8_regex"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col8_smart" checked="checked">
+                    </td>
+                </tr>
+                <tr id="filter_col10" data-column="9">
+                    <td>Column - 簽到時間</td>
+                    <td align="center"><input type="text" class="column_filter" id="col9_filter"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col9_regex"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col9_smart" checked="checked">
+                    </td>
+                </tr>
+                <tr id="filter_col11" data-column="10">
+                    <td>Column - 簽退時間</td>
+                    <td align="center"><input type="text" class="column_filter" id="col10_filter"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col10_regex"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col10_smart" checked="checked">
+                    </td>
+                </tr>
+            </tbody>
         </table>
 
         <section id="results-container" class="hidden">
