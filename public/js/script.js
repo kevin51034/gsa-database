@@ -22,17 +22,8 @@
         //console.log(Object.keys(json[1]));
         //console.log(Object.values(Object.keys(json[1]))[1]);
         //console.log(Object.values(Object.values(Object.keys(json[1]))[1]));
-        for (var prop in json) {
-            //console.log(Object.keys(json[prop]));
-            //console.log(Object.values(json[prop]));
-            let rowInfo = Object.values(json[prop]);
-            for (let i = 0; i < rowInfo.length; i++) {
-                //console.log(rowInfo[i]);
-            }
-            //console.log(prop + " = " + json[prop] + "\n");
-        }
 
-        
+
 
         $('#datatable').DataTable({
             dom: 'lBfrtip',
@@ -40,7 +31,7 @@
             buttons: [
                 'copy', 'csv', 'excel', 'pdf', 'print', 'colvis'
             ],
-            
+
             data: json,
             columns: [{
                     data: '中心id'
@@ -83,39 +74,39 @@
 
             //paging: false,
             //select: true,
-            
+
 
             initComplete: function () {
-                this.api().columns().every( function () {
+                this.api().columns().every(function () {
                     var column = this;
                     var select = $('<select><option value=""></option></select>')
-                        .appendTo( $(column.footer()).empty() )
-                        .on( 'change', function () {
+                        .appendTo($(column.footer()).empty())
+                        .on('change', function () {
                             var val = $.fn.dataTable.util.escapeRegex(
                                 $(this).val()
                             );
-     
+
                             column
-                                .search( val ? '^'+val+'$' : '', true, false )
+                                .search(val ? '^' + val + '$' : '', true, false)
                                 .draw();
-                        } );
-     
-                    column.data().unique().sort().each( function ( d, j ) {
-                        select.append( '<option value="'+d+'">'+d+'</option>' )
-                    } );
-                } );
+                        });
+
+                    column.data().unique().sort().each(function (d, j) {
+                        select.append('<option value="' + d + '">' + d + '</option>')
+                    });
+                });
             },
 
 
         });
 
-        $('input.global_filter').on( 'keyup click', function () {
+        $('input.global_filter').on('keyup click', function () {
             filterGlobal();
-        } );
-     
-        $('input.column_filter').on( 'keyup click', function () {
-            filterColumn( $(this).parents('tr').attr('data-column') );
-        } );
+        });
+
+        $('input.column_filter').on('keyup click', function () {
+            filterColumn($(this).parents('tr').attr('data-column'));
+        });
 
         resultsDiv.textContent = JSON.stringify(json, null, 2);
         //console.log(resultsDiv.textContent);
@@ -130,19 +121,19 @@
         loading.classList.add('hidden');
     }
 
-    function filterGlobal () {
+    function filterGlobal() {
         $('#datatable').DataTable().search(
             $('#global_filter').val(),
             $('#global_regex').prop('checked'),
             $('#global_smart').prop('checked')
         ).draw();
     }
-     
-    function filterColumn ( i ) {
-        $('#datatable').DataTable().column( i ).search(
-            $('#col'+i+'_filter').val(),
-            $('#col'+i+'_regex').prop('checked'),
-            $('#col'+i+'_smart').prop('checked')
+
+    function filterColumn(i) {
+        $('#datatable').DataTable().column(i).search(
+            $('#col' + i + '_filter').val(),
+            $('#col' + i + '_regex').prop('checked'),
+            $('#col' + i + '_smart').prop('checked')
         ).draw();
     }
 
@@ -178,7 +169,7 @@
         keysContainer.append(container);
     }
 
-    async function onPostform(event){
+    async function onPostform(event) {
         event.preventDefault();
         const path = '/api';
 
@@ -191,65 +182,101 @@
         //const allRows = bodyDataContainer.querySelectorAll('.body-row');
         const bodyObj = {};
 
-            const studentName = document.querySelector('.studentName')
-            const studentID = document.querySelector('.studentID')
-            const classDate = document.querySelector('.classDate')
-            const signinTime = document.querySelector('.signinTime')
-            const signoutTime = document.querySelector('.signoutTime')
+        const studentName = document.querySelector('.studentName')
+        const studentID = document.querySelector('.studentID')
+        const classDate = document.querySelector('.classDate')
+        const signinTime = document.querySelector('.signinTime')
+        const signoutTime = document.querySelector('.signoutTime')
 
-            const centerName = document.querySelector('.centerName')
-            const courseName = document.querySelector('.courseName')
+        const centerName = document.querySelector('.centerName')
+        const courseName = document.querySelector('.courseName')
 
-            bodyObj[studentName.name] = studentName.value.trim();
-            bodyObj[studentID.name] = studentID.value.trim();
-            bodyObj[classDate.name] = classDate.value.trim();
-            bodyObj[signinTime.name] = signinTime.value.trim();
-            bodyObj[signoutTime.name] = signoutTime.value.trim();
-            bodyObj[centerName.name] = centerName.options[centerName.selectedIndex].value;
-            bodyObj[courseName.name] = courseName.options[courseName.selectedIndex].value;
+        bodyObj[studentName.name] = studentName.value.trim();
+        bodyObj[studentID.name] = studentID.value.trim();
+        bodyObj[classDate.name] = classDate.value.trim();
+        bodyObj[signinTime.name] = signinTime.value.trim();
+        bodyObj[signoutTime.name] = signoutTime.value.trim();
+        bodyObj[centerName.name] = centerName.options[centerName.selectedIndex].value;
+        bodyObj[courseName.name] = courseName.options[courseName.selectedIndex].value;
 
-            console.log(bodyObj);
-            //input 3~10 10 is note
-            //console.log(document.getElementsByTagName("input")[3].value);
+        console.log(bodyObj);
+        //input 3~10 10 is note
+        //console.log(document.getElementsByTagName("input")[3].value);
 
-            // transfer object to JSON and post
+        // transfer object to JSON and post
 
-            const bodySize = Object.keys(bodyObj).length;
-            if (bodyObj[studentName.name] && bodyObj[studentID.name] && bodyObj[classDate.name]
-                && bodyObj[signinTime.name] && bodyObj[signoutTime.name]
-                && bodyObj[centerName.name] && bodyObj[courseName.name]) {
-                options.body = JSON.stringify(bodyObj);
-                options.headers = {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                };
+        const bodySize = Object.keys(bodyObj).length;
+        if (bodyObj[studentName.name] && bodyObj[studentID.name] && bodyObj[classDate.name] &&
+            bodyObj[signinTime.name] && bodyObj[signoutTime.name] &&
+            bodyObj[centerName.name] && bodyObj[courseName.name]) {
+            options.body = JSON.stringify(bodyObj);
+            options.headers = {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            };
 
-                const response = await fetch(path, options);
-                const json = await response.json();
-                console.log(json);
+            const response = await fetch(path, options);
+            const json = await response.json();
+            console.log(json);
 
-            }
+        }
 
-            studentName.value='';
-            studentID.value='';
-            console.log(path);
-            console.log(options);
+        studentName.value = '';
+        studentID.value = '';
+        console.log(path);
+        console.log(options);
 
 
 
     }
 
-    async function changeFiltertable(event){
+    async function changeFiltertable(event) {
         event.preventDefault();
 
         const filterTable = document.querySelector('#filterTable');
-        if(filterTable.classList.contains('hidden')){
+        if (filterTable.classList.contains('hidden')) {
             filterTable.classList.remove('hidden');
-        }
-        else{
+        } else {
             filterTable.classList.add('hidden');
         }
     }
+
+    // show the info list dynamically from sheet 5
+    async function appendSelectOption() {
+        console.log('append');
+        const response = await fetch('/api/5', {
+            method: 'GET'
+        });
+        const json = await response.json();
+        console.log(json);
+
+        for (var prop in json) {
+            //console.log(Object.keys(json[prop]));
+            //console.log(Object.values(json[prop]));
+            let rowKey = Object.keys(json[prop]);
+            let rowValue = Object.values(json[prop]);
+            for (let i = 0; i < rowKey.length; i++) {
+
+                //console.log('key = ' + rowKey[i]);
+                //console.log('value = ' + rowValue[i]);
+
+                if (rowKey[i] == '課程名稱' && rowValue[i]) {
+                    console.log('key = ' + rowKey[i]);
+                    console.log('value = ' + rowValue[i]);
+                    let option = document.createElement('option');
+                    option.text = rowValue[i];
+                    option.value = rowValue[i];
+                    let select = document.querySelector('.courseName');
+                    console.log(select);
+                    console.log(option);
+
+                    select.appendChild(option);
+                }
+            }
+            //console.log(prop + " = " + json[prop] + "\n");
+        }
+    }
+
     function getParameters() {
         const path = pathInput.value.trim();
 
@@ -316,6 +343,8 @@
 
     const form = document.querySelector('.fetchForm');
     form.addEventListener('submit', onSubmit);
+
+    appendSelectOption();
     createRequestPreview();
 
 })();
