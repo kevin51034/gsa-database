@@ -7,9 +7,6 @@
         const loading = document.querySelector('#loading');
         loading.classList.remove('hidden');
 
-
-
-
         const resultsDiv = document.querySelector('#results');
         resultsDiv.innerHTML = '';
 
@@ -18,16 +15,17 @@
         });
         const json = await response.json();
         
-        
-        
         //const info = getParameters();
         //const response = await fetch(info.path, info.options);
         //const json = await response.json();
 
+        $('#datatable').DataTable().destroy();
+        //$('#datatable').DataTable().empty();
+
         $('#datatable').DataTable({
             dom: 'lBfrtip',
             buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print', 'colvis'
+                'copy', 'csv', 'excel', 'print', 'colvis', //'pdf'
             ],
             
             data: json,
@@ -64,12 +62,10 @@
                 {
                     data: '簽退時間'
                 },
-                //{ data: '課程地點地址' },
-                //{ data: '課程主題' },
-                //{ data: '課程類型' },
 
             ],
 
+            // select search
             initComplete: function () {
                 this.api().columns().every(function () {
                     var column = this;
@@ -79,12 +75,10 @@
                             var val = $.fn.dataTable.util.escapeRegex(
                                 $(this).val()
                             );
-
                             column
                                 .search(val ? '^' + val + '$' : '', true, false)
                                 .draw();
                         });
-
                     column.data().unique().sort().each(function (d, j) {
                         select.append('<option value="' + d + '">' + d + '</option>')
                     });
@@ -94,6 +88,7 @@
 
         });
 
+        // text search
         $('input.global_filter').on('keyup click', function () {
             filterGlobal();
         });
@@ -115,6 +110,11 @@
         loading.classList.add('hidden');
     }
 
+    /*setInterval( function () {
+        $('#datatable').DataTable().reload( null, false ); // user paging is not reset on reload
+        console.log('reload');
+    }, 10000 );*/
+
     function filterGlobal() {
         $('#datatable').DataTable().search(
             $('#global_filter').val(),
@@ -122,6 +122,7 @@
             $('#global_smart').prop('checked')
         ).draw();
     }
+
 
     function filterColumn(i) {
         $('#datatable').DataTable().column(i).search(
