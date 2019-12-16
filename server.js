@@ -16,27 +16,28 @@ app.use(express.static('public'));
 async function onGet(req, res) {
     await promisify(doc.useServiceAccountAuth)(creds);
     const info = await promisify(doc.getInfo)();
-    sheet = info.worksheets[4];
-    
+    sheet4 = info.worksheets[4];
+    //sheet5 = info.worksheets[5];
     //getRows return a object array
     //if limit = 1 then array length = 1
-    const rows = await promisify(sheet.getRows)({
+    const studentInfo = await promisify(sheet4.getRows)({
         offset: 2,
-        limit: 500,
+        //limit: 500,
     });
-    //fetch name from ID
-    console.log(rows[0].姓名);
 
-    res.json(rows);
+
+    res.json(studentInfo);
 }
 app.get('/api', onGet);
 
+
+// get specific sheet
 async function onGetspecific(req, res) {
     await promisify(doc.useServiceAccountAuth)(creds);
     const info = await promisify(doc.getInfo)();
-    sheet = info.worksheets[4];
     
-    const studentID = req.params.ID;
+    const sheetID = req.params.ID;
+    sheet = info.worksheets[sheetID];
 
     //getRows return a object array
     //if limit = 1 then array length = 1
@@ -44,15 +45,13 @@ async function onGetspecific(req, res) {
         offset: 1,
         //limit: 500,
         //query: `學員證字號 = ${studentID}`
-        query: `姓名 = ${studentID}`
+
+        //query: `姓名 = ${studentID}`
     });
     //fetch name from ID
     //console.log(rows[0].姓名);
     //history
-    rows.forEach(row => {
-        console.log(row.課程名稱);
-        console.log(row.課程日期mmddyyyy);
-    })
+
 
     res.json(rows);
 }
@@ -65,19 +64,44 @@ async function onPost(req, res) {
     const info = await promisify(doc.getInfo)();
     //註冊紀錄(上課資訊)
     sheet = info.worksheets[4];
-    const newrow = req.body;
 
-    //await promisify(sheet.addRow)(newrow);
+    //the rest of the Info
+    courseSheet = info.worksheets[5];
+    const courseRows = await promisify(courseSheet.getRows)({
+        offset: 1,
+        //limit: 500,
+        query: `課程名稱 = ${req.body.課程名稱}`
+    });
 
-    //console.log(req);
-    console.log(req.body);
+    studentSheet = info.worksheets[3];
+    const studentRows = await promisify(studentSheet.getRows)({
+        offset: 1,
+        //limit: 500,
+        query: `學員證字號 = ${req.body.學員證字號}`
+    });
 
-    //the json information
-    for(let key in newrow) {
-        console.log(req.body[key]);
+    //console.log(req.body);
+    //console.log(courseRows[0]);
+    //console.log(studentRows[0]);
+
+    req.body.中心id = `${courseRows[0].中心id}`;
+    req.body.課程id = `${courseRows[0].課程id}`;
+    req.body.課程類型 = `${courseRows[0].課程類型}`;
+    req.body.課程主題 = `${courseRows[0].課程主題}`;
+    if(studentRows[0]){
+        req.body.身分證字號 = `${studentRows[0].身分證字號}`;
     }
 
-    res.json(newrow);
+    console.log(req.body);
+
+    const newrow = req.body;
+    await promisify(sheet.addRow)(newrow);
+
+    //console.log(req);
+
+    res.json({
+        responce: 'success'
+    });
 }
 app.post('/api', onPost);
 
