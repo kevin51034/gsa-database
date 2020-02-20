@@ -54,7 +54,7 @@
                     data: '課程名稱'
                 },
                 {
-                    data: '課程日期mmddyyyy'
+                    data: '課程日期yyyymmdd'
                 },
                 {
                     data: '簽到時間'
@@ -84,8 +84,6 @@
                     });
                 });
             },
-
-
         });
 
         // text search
@@ -130,38 +128,6 @@
             $('#col' + i + '_regex').prop('checked'),
             $('#col' + i + '_smart').prop('checked')
         ).draw();
-    }
-
-
-    function addKeyValueInput() {
-        const container = document.createElement('div');
-        container.className = 'body-row';
-
-        const key = document.createElement('input');
-        key.type = 'text';
-        key.className = 'key';
-        key.placeholder = 'key';
-        key.addEventListener('keyup', createRequestPreview);
-
-        const value = document.createElement('input');
-        value.type = 'text';
-        value.className = 'value';
-        value.placeholder = 'value';
-        value.addEventListener('keyup', createRequestPreview);
-
-        const removeButton = document.createElement('button');
-        removeButton.textContent = 'Remove';
-        removeButton.addEventListener('click', () => {
-            container.remove();
-            createRequestPreview();
-        });
-
-        container.append(key);
-        container.append(' : ');
-        container.append(value);
-        container.append(removeButton);
-        const keysContainer = document.querySelector('#key-values');
-        keysContainer.append(container);
     }
 
     async function onPostform(event) {
@@ -221,7 +187,144 @@
         //console.log(path);
         console.log(options);
 
+    }
 
+    async function signinForm(event) {
+        event.preventDefault();
+
+        const path = '/api';
+
+        const options = {
+            method: 'POST'
+        };
+
+        //POST
+        //const formDataContainer = document.querySelector('#form-values');
+        //const allRows = bodyDataContainer.querySelectorAll('.body-row');
+        const bodyObj = {};
+
+        const studentName = document.querySelector('.studentName1')
+        const studentID = document.querySelector('.studentID1')
+        //const classDate = document.querySelector('.classDate')
+        //const signinTime = document.querySelector('.signinTime')
+        //const signoutTime = document.querySelector('.signoutTime')
+
+        const centerName = document.querySelector('.centerName1')
+        const courseName = document.querySelector('.courseName1')
+
+        bodyObj[studentName.name] = studentName.value.trim();
+        bodyObj[studentID.name] = studentID.value.trim();
+        //bodyObj[classDate.name] = classDate.value.trim();
+        //bodyObj[signinTime.name] = signinTime.value.trim();
+        const date = new Date()
+        console.log(date.toLocaleDateString());
+        console.log(date.toLocaleTimeString('it-IT'));
+
+        bodyObj["課程日期yyyymmdd"] = date.toLocaleDateString();
+        bodyObj["簽到時間"] = date.toLocaleTimeString('it-IT');
+
+        //bodyObj[signoutTime.name] = signoutTime.value.trim();
+        bodyObj[centerName.name] = centerName.options[centerName.selectedIndex].value;
+        bodyObj[courseName.name] = courseName.options[courseName.selectedIndex].value;
+
+        console.log(bodyObj);
+        //input 3~10 10 is note
+        //console.log(document.getElementsByTagName("input")[3].value);
+
+        // transfer object to JSON and post
+
+        const bodySize = Object.keys(bodyObj).length;
+        if (bodyObj[studentName.name] && bodyObj[studentID.name] &&
+            bodyObj[centerName.name] && bodyObj[courseName.name]) {
+            console.log('if');
+
+            options.body = JSON.stringify(bodyObj);
+            options.headers = {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            };
+
+            const response = await fetch(path, options);
+            const json = await response.json();
+            console.log(json);
+
+        }
+
+        studentName.value = '';
+        studentID.value = '';
+        //console.log(path);
+        console.log(options);
+
+    }
+
+    async function signoutForm(event) {
+        event.preventDefault();
+        /*document.querySelector('#sign-in-and-out').submit(function(e){
+            e.preventDefault();
+        });*/
+
+        const path = '/api';
+
+        const options = {
+            method: 'PATCH'
+        };
+
+        //POST
+        //const formDataContainer = document.querySelector('#form-values');
+        //const allRows = bodyDataContainer.querySelectorAll('.body-row');
+        const bodyObj = {};
+
+        const studentName = document.querySelector('.studentName2')
+        const studentID = document.querySelector('.studentID2')
+        //const classDate = document.querySelector('.classDate')
+        //const signinTime = document.querySelector('.signinTime')
+        //const signoutTime = document.querySelector('.signoutTime')
+
+        const centerName = document.querySelector('.centerName2')
+        const courseName = document.querySelector('.courseName2')
+
+        bodyObj[studentName.name] = studentName.value.trim();
+        bodyObj[studentID.name] = studentID.value.trim();
+        //bodyObj[classDate.name] = classDate.value.trim();
+        //bodyObj[signinTime.name] = signinTime.value.trim();
+        const date = new Date()
+        console.log(date.toLocaleDateString());
+        console.log(date.toLocaleTimeString('it-IT'));
+
+        bodyObj["課程日期yyyymmdd"] = date.toLocaleDateString();
+        bodyObj["簽退時間"] = date.toLocaleTimeString('it-IT');
+
+        //bodyObj[signoutTime.name] = signoutTime.value.trim();
+        bodyObj[centerName.name] = centerName.options[centerName.selectedIndex].value;
+        bodyObj[courseName.name] = courseName.options[courseName.selectedIndex].value;
+
+        console.log(bodyObj);
+        //input 3~10 10 is note
+        //console.log(document.getElementsByTagName("input")[3].value);
+
+        // transfer object to JSON and post
+
+        const bodySize = Object.keys(bodyObj).length;
+        if (bodyObj[studentName.name] && bodyObj[studentID.name] &&
+            bodyObj[centerName.name] && bodyObj[courseName.name]) {
+            console.log('if');
+
+            options.body = JSON.stringify(bodyObj);
+            options.headers = {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            };
+
+            const response = await fetch(path, options);
+            const json = await response.json();
+            console.log(json);
+
+        }
+
+        studentName.value = '';
+        studentID.value = '';
+        //console.log(path);
+        console.log(options);
 
     }
 
@@ -243,7 +346,7 @@
             method: 'GET'
         });
         const json = await response.json();
-        console.log(json);
+        //console.log(json);
 
         for (var prop in json) {
             //console.log(Object.keys(json[prop]));
@@ -256,16 +359,22 @@
                 //console.log('value = ' + rowValue[i]);
 
                 if (rowKey[i] == '課程名稱' && rowValue[i]) {
-                    console.log('key = ' + rowKey[i]);
-                    console.log('value = ' + rowValue[i]);
+                    //console.log('key = ' + rowKey[i]);
+                    //console.log('value = ' + rowValue[i]);
                     let option = document.createElement('option');
                     option.text = rowValue[i];
                     option.value = rowValue[i];
                     let select = document.querySelector('.courseName');
-                    console.log(select);
-                    console.log(option);
+                    let select1 = document.querySelector('.courseName1');
+                    let select2 = document.querySelector('.courseName2');
+
+                    //console.log(select);
+                    //console.log(option);
 
                     select.appendChild(option);
+                    select1.appendChild(option);
+                    select2.appendChild(option);
+
                 }
                 /*else if (rowKey[i] == '樂齡學習中心名稱' && rowValue[i]) {
                     console.log('key = ' + rowKey[i]);
@@ -317,28 +426,14 @@
         };
     }
 
-    function createRequestPreview() {
-        const info = getParameters();
-        const optionsPretty = JSON.stringify(info.options, null, 2);
-        const previewArea = document.querySelector('#preview-area');
-        previewArea.innerHTML = `fetch('${info.path}', ${optionsPretty});`
-    }
-
-    //const pathInput = document.querySelector('#path-input');
-    //pathInput.addEventListener('keyup', createRequestPreview);
-    //const methodInput = document.querySelector('#method-input');
-    //methodInput.addEventListener('change', createRequestPreview);
-
-    /*const addButton = document.querySelector('#add-button');
-    addButton.addEventListener('click', (event) => {
-        event.preventDefault();
-        addKeyValueInput();
-    });*/
-
     const postButton = document.querySelector('#form-value');
     postButton.addEventListener('submit', onPostform);
 
+    const signIn = document.querySelector('#sign-in-and-out');
+    signIn.addEventListener('submit', signinForm);
 
+    const signOut = document.querySelector("#sign-in-and-out1");
+    signOut.addEventListener('submit', signoutForm);
 
     const filterButton = document.querySelector('#filterButton');
     filterButton.addEventListener('click', changeFiltertable);
