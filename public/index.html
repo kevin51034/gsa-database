@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
     <title>Spreadsheet Tester</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
     <script src="js/script.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css" defer/>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -40,11 +40,10 @@
         src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js" defer></script>
     <script type="text/javascript" language="javascript"
         src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.colVis.min.js" defer></script>
+        <script src="${ctx}/resources/js/dataTables.tableTools.js" type="text/javascript" chartset="utf8" ></script>
 
+    <link rel="stylesheet" type="text/css" href="css/style2.css" defer/>
 
-    <script>
-
-    </script>
     <style type="text/css">
         .dt-buttons {
             margin-left: 50px;
@@ -82,8 +81,21 @@
         </div>
     </nav>
 
-    <section>
-        <h1>Spreadsheet test UI</h1>
+    <header class="header">
+            <div id='bg1'></div>
+                <div class="content">
+                    <span class="border">
+                        Spreadsheet test UI
+                    </span>
+                </div>
+    </header>
+
+    <section class='sec'>
+            <h1></h1>
+            <span class="border">
+            </span>
+        </div>
+
         <fieldset>
 
             <!--<form class='fetchForm'>
@@ -116,6 +128,7 @@
             </form>-->
 
 
+            <!-- **** post form with date selection -->
 
             <form class="needs-validation" id="form-value" novalidate>
                 <div class="form-row">
@@ -136,8 +149,8 @@
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
-                        <label for="validationCustom02">課程日期mm-dd-yyyy</label>
-                        <input type="text" class="form-control classDate" id="validationCustom02" name="課程日期mmddyyyy"
+                        <label for="validationCustom02">課程日期yyyy/mm/dd</label>
+                        <input type="text" class="form-control classDate" id="validationCustom02" name="課程日期yyyymmdd"
                             placeholder="12-31-2019" required>
                         <div class="valid-feedback">
                             Looks good!
@@ -178,6 +191,7 @@
                         <label for="validationCustom04">課程名稱</label>
                         <select class="custom-select courseName" id="validationCustom04" name="課程名稱" required>
                             <option selected disabled value="">Choose...</option>
+                            <option>其他</option>
 
                         </select>
                         <div class="invalid-feedback"></div>
@@ -195,14 +209,131 @@
 
             <br><br>
 
+
+            <!-- **** sign in post form without date selection -->
+
+            <form class="needs-validation" id="sign-in-and-out" novalidate>
+                <div class="form-row">
+                    <div class="col-md-4 mb-3">
+                        <label for="validationCustom01">姓名</label>
+                        <input type="text" class="form-control studentName1" id="validationCustom01 studentName1"
+                            name="姓名" placeholder="王小明" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="validationCustom02">學員證字號</label>
+                        <input type="text" class="form-control studentID1" id="validationCustom02" name="學員證字號"
+                            placeholder="1070001-X" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-3 mb-3">
+                        <label for="validationCustom04">樂齡學習中心名稱</label>
+                        <select class="custom-select centerName1" id="validationCustom04" name="樂齡學習中心名稱" required>
+                            <option selected disabled value="">Choose...</option>
+                            <option>嘉義縣民雄鄉樂齡學習中心</option>
+                            <option>其他</option>
+
+                        </select>
+                        <div class="invalid-feedback">
+                            Please select a valid state.
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="validationCustom04">課程名稱</label>
+                        <select class="custom-select courseName1" id="validationCustom04" name="課程名稱" required>
+                            <option selected disabled value="">Choose...</option>
+                            <option>其他</option>
+
+                        </select>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="validationCustom05">備註</label>
+                        <input type="text" class="form-control" id="validationCustom05">
+                        <div class="invalid-feedback">
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" id='signInButton' type="submit">Sign In</button>
+
+            </form>
+
+            <br><br>
+
+            <!-- **** sign out post form without date selection -->
+
+            <form class="needs-validation" id="sign-in-and-out1" novalidate>
+                <div class="form-row">
+                    <div class="col-md-4 mb-3">
+                        <label for="validationCustom01">姓名</label>
+                        <input type="text" class="form-control studentName2" id="validationCustom01 studentName1"
+                            name="姓名" placeholder="王小明" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="validationCustom02">學員證字號</label>
+                        <input type="text" class="form-control studentID2" id="validationCustom02" name="學員證字號"
+                            placeholder="1070001-X" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="form-row">
+                    <div class="col-md-3 mb-3">
+                        <label for="validationCustom04">樂齡學習中心名稱</label>
+                        <select class="custom-select centerName2" id="validationCustom04" name="樂齡學習中心名稱" required>
+                            <option selected disabled value="">Choose...</option>
+                            <option>嘉義縣民雄鄉樂齡學習中心</option>
+                            <option>其他</option>
+            
+                        </select>
+                        <div class="invalid-feedback">
+                            Please select a valid state.
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="validationCustom04">課程名稱</label>
+                        <select class="custom-select courseName2" id="validationCustom04" name="課程名稱" required>
+                            <option selected disabled value="">Choose...</option>
+                            <option>其他</option>
+            
+                        </select>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="validationCustom05">備註</label>
+                        <input type="text" class="form-control" id="validationCustom05">
+                        <div class="invalid-feedback">
+                        </div>
+                    </div>
+                </div>
+            
+                <button class="btn btn-danger" id='signOutButton' type="submit">Sign Out</button>
+            
+            </form>
+
+            <br><br>
+
         </fieldset>
 
 
         <form class='fetchForm'>
                 <p>
-                    <input type="submit" id="fetch-button" value="Fetch!" />
+                    <input type="submit" id="fetch-button" value="GET" />
                 </p>
-            </form>
+        </form>
 
         <div class="text-center justify-content-center hidden" id="loading">
             <strong>Loading... </strong>
@@ -211,7 +342,7 @@
             </div>
         </div>
 
-        <table id="datatable" class="display hidden">
+        <table id="datatable" class="display compact hidden" style="width:95%">
             <thead>
                 <tr>
                     <th>中心id</th>
@@ -222,7 +353,7 @@
                     <th>社區</th>
                     <th>課程id</th>
                     <th>課程名稱</th>
-                    <th>課程日期mmddyyyy</th>
+                    <th>課程日期yyyymmdd</th>
                     <th>簽到時間</th>
                     <th>簽退時間</th>
                 </tr>
@@ -237,7 +368,7 @@
                     <th>社區</th>
                     <th>課程id</th>
                     <th>課程名稱</th>
-                    <th>課程日期mmddyyyy</th>
+                    <th>課程日期yyyymmdd</th>
                     <th>簽到時間</th>
                     <th>簽退時間</th>
                 </tr>
@@ -323,7 +454,7 @@
                     </td>
                 </tr>
                 <tr id="filter_col9" data-column="8">
-                    <td>Column - 課程日期mmddyyyy</td>
+                    <td>Column - 課程日期yyyymmdd</td>
                     <td align="center"><input type="text" class="column_filter" id="col8_filter"></td>
                     <td align="center"><input type="checkbox" class="column_filter" id="col8_regex"></td>
                     <td align="center"><input type="checkbox" class="column_filter" id="col8_smart" checked="checked">
@@ -348,7 +479,7 @@
 
         <section id="results-container" class="hidden">
             <hr />
-            <h2>Fetch results:</h2>
+            <h2>JSON :</h2>
             <pre id="results"></pre>
         </section>
     </section>
