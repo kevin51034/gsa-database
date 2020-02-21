@@ -7,7 +7,7 @@
 
     <title>Spreadsheet Tester</title>
     <script src="js/script.js" defer></script>
-    <link rel="stylesheet" type="text/css" href="css/style.css" defer/>
+    <link rel="stylesheet" type="text/css" href="css/style.css" defer />
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -17,6 +17,7 @@
         href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css" />
 
     </script>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" defer></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" defer></script>
 
@@ -40,9 +41,12 @@
         src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js" defer></script>
     <script type="text/javascript" language="javascript"
         src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.colVis.min.js" defer></script>
-        <script src="${ctx}/resources/js/dataTables.tableTools.js" type="text/javascript" chartset="utf8" ></script>
+    <script src="${ctx}/resources/js/dataTables.tableTools.js" type="text/javascript" chartset="utf8"></script>
 
-    <link rel="stylesheet" type="text/css" href="css/style2.css" defer/>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" defer></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js" defer></script>
+
+    <link rel="stylesheet" type="text/css" href="css/style2.css" defer />
 
     <style type="text/css">
         .dt-buttons {
@@ -82,257 +86,259 @@
     </nav>
 
     <header class="header">
-            <div id='bg1'></div>
-                <div class="content">
-                    <span class="border">
-                        Spreadsheet test UI
-                    </span>
-                </div>
+        <div id='bg1'></div>
+        <div class="content">
+            <span class="border">
+                Spreadsheet test UI
+            </span>
+        </div>
     </header>
 
     <section class='sec'>
-            <h1></h1>
-            <span class="border">
-            </span>
+        <h1></h1>
+        <span class="border">
+        </span>
         </div>
 
         <fieldset>
 
-            <!--<form class='fetchForm'>
-                <p>
-                    API Path: <input type="text" id="path-input" value="/api" />
-                </p>
-                <p>
-                    Method:
-                    <select id="method-input">
-                        <option>GET</option>
-                        <option>DELETE</option>
-                        <option>POST</option>
-                        <option>PATCH</option>
-                    </select>
-                </p>
-                <p>
-                    Body data: <button id="add-button">Add</button>
-                    <div id="key-values"></div>
-                </p>
-
-
-
-                <p>
-                    Request preview:<br />
-                    <pre id="preview-area" contenteditable readonly></pre>
-                </p>
-                <p>
-                    <input type="submit" id="fetch-button" value="Fetch!" />
-                </p>
-            </form>-->
-
-
-            <!-- **** post form with date selection -->
-
-            <form class="needs-validation" id="form-value" novalidate>
-                <div class="form-row">
-                    <div class="col-md-4 mb-3">
-                        <label for="validationCustom01">姓名</label>
-                        <input type="text" class="form-control studentName" id="validationCustom01 studentName"
-                            name="姓名" placeholder="王小明" required>
-                        <div class="valid-feedback">
-                            Looks good!
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="validationCustom02">學員證字號</label>
-                        <input type="text" class="form-control studentID" id="validationCustom02" name="學員證字號"
-                            placeholder="1070001-X" required>
-                        <div class="valid-feedback">
-                            Looks good!
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="validationCustom02">課程日期yyyy/mm/dd</label>
-                        <input type="text" class="form-control classDate" id="validationCustom02" name="課程日期yyyymmdd"
-                            placeholder="12-31-2019" required>
-                        <div class="valid-feedback">
-                            Looks good!
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="validationCustom02">簽到時間</label>
-                        <input type="text" class="form-control signinTime" id="validationCustom02" name="簽到時間"
-                            placeholder="9:15" required>
-                        <div class="valid-feedback">
-                            Looks good!
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="validationCustom02">簽退時間</label>
-                        <input type="text" class="form-control signoutTime" id="validationCustom02" name="簽退時間"
-                            placeholder="10:55" required>
-                        <div class="valid-feedback">
-                            Looks good!
-                        </div>
-                    </div>
+            <!-- **** nav sign in out custom -->
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+                        aria-controls="nav-home" aria-selected="true">簽到</a>
+                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+                        aria-controls="nav-profile" aria-selected="false">簽退</a>
+                    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
+                        aria-controls="nav-contact" aria-selected="false">自訂</a>
                 </div>
+            </nav>
+            <br>
+            <div class="tab-content" id="nav-tabContent">
+                <!-- **** sign in -->
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <!-- **** sign in post form without date selection -->
 
-                <div class="form-row">
-                    <div class="col-md-3 mb-3">
-                        <label for="validationCustom04">樂齡學習中心名稱</label>
-                        <select class="custom-select centerName" id="validationCustom04" name="樂齡學習中心名稱" required>
-                            <option selected disabled value="">Choose...</option>
-                            <option>嘉義縣民雄鄉樂齡學習中心</option>
-                            <option>其他</option>
-
-                        </select>
-                        <div class="invalid-feedback">
-                            Please select a valid state.
+                    <form class="needs-validation" id="sign-in-and-out" novalidate>
+                        <div class="form-row">
+                            <div class="col-md-4 mb-3">
+                                <label for="validationCustom10">姓名</label>
+                                <input type="text" class="form-control studentName1"
+                                    id="validationCustom10 studentName1" name="姓名" placeholder="王小明" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="validationCustom11">學員證字號</label>
+                                <input type="text" class="form-control studentID1" id="validationCustom11" name="學員證字號"
+                                    placeholder="1070001-X" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label for="validationCustom04">課程名稱</label>
-                        <select class="custom-select courseName" id="validationCustom04" name="課程名稱" required>
-                            <option selected disabled value="">Choose...</option>
-                            <option>其他</option>
 
-                        </select>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label for="validationCustom05">備註</label>
-                        <input type="text" class="form-control" id="validationCustom05">
-                        <div class="invalid-feedback">
+                        <div class="form-row">
+                            <div class="col-md-3 mb-3">
+                                <label for="validationCustom12">樂齡學習中心名稱</label>
+                                <select class="custom-select centerName1" id="validationCustom12" name="樂齡學習中心名稱"
+                                    required>
+                                    <option selected disabled value="">Choose...</option>
+                                    <option>其他</option>
+
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please select a valid state.
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="validationCustom13">課程名稱</label>
+                                <select class="custom-select courseName1" id="validationCustom13" name="課程名稱" required>
+                                    <option selected disabled value="">Choose...</option>
+                                    <option>其他</option>
+
+                                </select>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="validationCustom14">拓點村里</label>
+                                <select class="custom-select spotName1" id="validationCustom14" name="拓點村里" required>
+                                    <option selected disabled value="">Choose...</option>
+                                    <option>其他</option>
+                                </select>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="validationCustom15">備註</label>
+                                <input type="text" class="form-control" id="validationCustom15">
+                                <div class="invalid-feedback">
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                        <button class="btn btn-primary" id='signInButton' type="submit">Sign In</button>
+                    </form>
                 </div>
-
-                <button class="btn btn-primary" id='postButton' type="submit">Submit form</button>
-            </form>
-
-            <br><br>
-
-
-            <!-- **** sign in post form without date selection -->
-
-            <form class="needs-validation" id="sign-in-and-out" novalidate>
-                <div class="form-row">
-                    <div class="col-md-4 mb-3">
-                        <label for="validationCustom01">姓名</label>
-                        <input type="text" class="form-control studentName1" id="validationCustom01 studentName1"
-                            name="姓名" placeholder="王小明" required>
-                        <div class="valid-feedback">
-                            Looks good!
+                <!-- **** sign out nav-->
+                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                    <!-- **** sign out post form without date selection -->
+                    <form class="needs-validation" id="sign-in-and-out1" novalidate>
+                        <div class="form-row">
+                            <div class="col-md-4 mb-3">
+                                <label for="validationCustom16">姓名</label>
+                                <input type="text" class="form-control studentName2"
+                                    id="validationCustom16 studentName1" name="姓名" placeholder="王小明" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="validationCustom17">學員證字號</label>
+                                <input type="text" class="form-control studentID2" id="validationCustom17" name="學員證字號"
+                                    placeholder="1070001-X" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="validationCustom02">學員證字號</label>
-                        <input type="text" class="form-control studentID1" id="validationCustom02" name="學員證字號"
-                            placeholder="1070001-X" required>
-                        <div class="valid-feedback">
-                            Looks good!
+                        <div class="form-row">
+                            <div class="col-md-3 mb-3">
+                                <label for="validationCustom18">樂齡學習中心名稱</label>
+                                <select class="custom-select centerName2" id="validationCustom18" name="樂齡學習中心名稱"
+                                    required>
+                                    <option selected disabled value="">Choose...</option>
+                                    <option>其他</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please select a valid state.
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="validationCustom19">課程名稱</label>
+                                <select class="custom-select courseName2" id="validationCustom19" name="課程名稱" required>
+                                    <option selected disabled value="">Choose...</option>
+                                    <option>其他</option>
+
+                                </select>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="validationCustom20">拓點村里</label>
+                                <select class="custom-select spotName2" id="validationCustom20" name="拓點村里" required>
+                                    <option selected disabled value="">Choose...</option>
+                                    <option>其他</option>
+                                </select>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="validationCustom21">備註</label>
+                                <input type="text" class="form-control" id="validationCustom21">
+                                <div class="invalid-feedback">
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                        <button class="btn btn-danger" id='signOutButton' type="submit">Sign Out</button>
+                    </form>
                 </div>
+                <!-- **** custom -->
+                <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                    <!-- **** post form with date selection -->
 
-                <div class="form-row">
-                    <div class="col-md-3 mb-3">
-                        <label for="validationCustom04">樂齡學習中心名稱</label>
-                        <select class="custom-select centerName1" id="validationCustom04" name="樂齡學習中心名稱" required>
-                            <option selected disabled value="">Choose...</option>
-                            <option>嘉義縣民雄鄉樂齡學習中心</option>
-                            <option>其他</option>
-
-                        </select>
-                        <div class="invalid-feedback">
-                            Please select a valid state.
+                    <form class="needs-validation" id="form-value" novalidate>
+                        <div class="form-row">
+                            <div class="col-md-4 mb-3">
+                                <label for="validationCustom01">姓名</label>
+                                <input type="text" class="form-control studentName" id="validationCustom01 studentName"
+                                    name="姓名" placeholder="王小明" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="validationCustom02">學員證字號</label>
+                                <input type="text" class="form-control studentID" id="validationCustom02" name="學員證字號"
+                                    placeholder="1070001-X" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="validationCustom03">課程日期yyyy/mm/dd</label>
+                                <input type="text" class="form-control classDate" id="validationCustom03"
+                                    name="課程日期yyyymmdd" placeholder="12-31-2019" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="validationCustom04">簽到時間</label>
+                                <input type="text" class="form-control signinTime" id="validationCustom04" name="簽到時間"
+                                    placeholder="9:15" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="validationCustom05">簽退時間</label>
+                                <input type="text" class="form-control signoutTime" id="validationCustom05" name="簽退時間"
+                                    placeholder="10:55" required>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label for="validationCustom04">課程名稱</label>
-                        <select class="custom-select courseName1" id="validationCustom04" name="課程名稱" required>
-                            <option selected disabled value="">Choose...</option>
-                            <option>其他</option>
 
-                        </select>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label for="validationCustom05">備註</label>
-                        <input type="text" class="form-control" id="validationCustom05">
-                        <div class="invalid-feedback">
+                        <div class="form-row">
+                            <div class="col-md-3 mb-3">
+                                <label for="validationCustom06">樂齡學習中心名稱</label>
+                                <select class="custom-select centerName" id="validationCustom06" name="樂齡學習中心名稱"
+                                    required>
+                                    <option selected disabled value="">Choose...</option>
+                                    <option>其他</option>
+
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please select a valid state.
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="validationCustom07">課程名稱</label>
+                                <select class="custom-select courseName" id="validationCustom07" name="課程名稱" required>
+                                    <option selected disabled value="">Choose...</option>
+                                    <option>其他</option>
+
+                                </select>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="validationCustom08">拓點村里</label>
+                                <select class="custom-select spotName" id="validationCustom08" name="拓點村里" required>
+                                    <option selected disabled value="">Choose...</option>
+                                    <option>其他</option>
+                                </select>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="validationCustom09">備註</label>
+                                <input type="text" class="form-control" id="validationCustom09">
+                                <div class="invalid-feedback">
+                                </div>
+                            </div>
                         </div>
-                    </div>
+
+                        <button class="btn btn-primary" id='postButton' type="submit">Submit form</button>
+                    </form>
                 </div>
-
-                <button class="btn btn-primary" id='signInButton' type="submit">Sign In</button>
-
-            </form>
-
-            <br><br>
-
-            <!-- **** sign out post form without date selection -->
-
-            <form class="needs-validation" id="sign-in-and-out1" novalidate>
-                <div class="form-row">
-                    <div class="col-md-4 mb-3">
-                        <label for="validationCustom01">姓名</label>
-                        <input type="text" class="form-control studentName2" id="validationCustom01 studentName1"
-                            name="姓名" placeholder="王小明" required>
-                        <div class="valid-feedback">
-                            Looks good!
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="validationCustom02">學員證字號</label>
-                        <input type="text" class="form-control studentID2" id="validationCustom02" name="學員證字號"
-                            placeholder="1070001-X" required>
-                        <div class="valid-feedback">
-                            Looks good!
-                        </div>
-                    </div>
-                </div>
-            
-                <div class="form-row">
-                    <div class="col-md-3 mb-3">
-                        <label for="validationCustom04">樂齡學習中心名稱</label>
-                        <select class="custom-select centerName2" id="validationCustom04" name="樂齡學習中心名稱" required>
-                            <option selected disabled value="">Choose...</option>
-                            <option>嘉義縣民雄鄉樂齡學習中心</option>
-                            <option>其他</option>
-            
-                        </select>
-                        <div class="invalid-feedback">
-                            Please select a valid state.
-                        </div>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label for="validationCustom04">課程名稱</label>
-                        <select class="custom-select courseName2" id="validationCustom04" name="課程名稱" required>
-                            <option selected disabled value="">Choose...</option>
-                            <option>其他</option>
-            
-                        </select>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label for="validationCustom05">備註</label>
-                        <input type="text" class="form-control" id="validationCustom05">
-                        <div class="invalid-feedback">
-                        </div>
-                    </div>
-                </div>
-            
-                <button class="btn btn-danger" id='signOutButton' type="submit">Sign Out</button>
-            
-            </form>
-
+            </div>
             <br><br>
 
         </fieldset>
 
 
         <form class='fetchForm'>
-                <p>
-                    <input type="submit" id="fetch-button" value="GET" />
-                </p>
+            <p>
+                <input type="submit" id="fetch-button" value="GET" />
+            </p>
         </form>
 
         <div class="text-center justify-content-center hidden" id="loading">
@@ -350,7 +356,7 @@
                     <th>身分證字號</th>
                     <th>學員證字號</th>
                     <th>樂齡學習中心名稱</th>
-                    <th>社區</th>
+                    <th>拓點村里</th>
                     <th>課程id</th>
                     <th>課程名稱</th>
                     <th>課程日期yyyymmdd</th>
@@ -365,7 +371,7 @@
                     <th>身分證字號</th>
                     <th>學員證字號</th>
                     <th>樂齡學習中心名稱</th>
-                    <th>社區</th>
+                    <th>拓點村里</th>
                     <th>課程id</th>
                     <th>課程名稱</th>
                     <th>課程日期yyyymmdd</th>
@@ -433,7 +439,7 @@
                     </td>
                 </tr>
                 <tr id="filter_col6" data-column="5">
-                    <td>Column - 社區</td>
+                    <td>Column - 拓點村里</td>
                     <td align="center"><input type="text" class="column_filter" id="col5_filter"></td>
                     <td align="center"><input type="checkbox" class="column_filter" id="col5_regex"></td>
                     <td align="center"><input type="checkbox" class="column_filter" id="col5_smart" checked="checked">
