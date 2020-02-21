@@ -45,7 +45,7 @@
                     data: '樂齡學習中心名稱'
                 },
                 {
-                    data: '社區'
+                    data: '拓點村里'
                 },
                 {
                     data: '課程id'
@@ -211,6 +211,7 @@
 
         const centerName = document.querySelector('.centerName1')
         const courseName = document.querySelector('.courseName1')
+        const spotName = document.querySelector('.spotName1')
 
         bodyObj[studentName.name] = studentName.value.trim();
         bodyObj[studentID.name] = studentID.value.trim();
@@ -226,6 +227,7 @@
         //bodyObj[signoutTime.name] = signoutTime.value.trim();
         bodyObj[centerName.name] = centerName.options[centerName.selectedIndex].value;
         bodyObj[courseName.name] = courseName.options[courseName.selectedIndex].value;
+        bodyObj[spotName.name] = spotName.options[spotName.selectedIndex].value;
 
         console.log(bodyObj);
         //input 3~10 10 is note
@@ -235,7 +237,8 @@
 
         const bodySize = Object.keys(bodyObj).length;
         if (bodyObj[studentName.name] && bodyObj[studentID.name] &&
-            bodyObj[centerName.name] && bodyObj[courseName.name]) {
+            bodyObj[centerName.name] && bodyObj[courseName.name] &&
+            bodyObj[spotName.name]) {
             console.log('if');
 
             options.body = JSON.stringify(bodyObj);
@@ -259,55 +262,36 @@
 
     async function signoutForm(event) {
         event.preventDefault();
-        /*document.querySelector('#sign-in-and-out').submit(function(e){
-            e.preventDefault();
-        });*/
 
         const path = '/api';
-
         const options = {
             method: 'PATCH'
         };
 
-        //POST
-        //const formDataContainer = document.querySelector('#form-values');
-        //const allRows = bodyDataContainer.querySelectorAll('.body-row');
         const bodyObj = {};
-
         const studentName = document.querySelector('.studentName2')
         const studentID = document.querySelector('.studentID2')
-        //const classDate = document.querySelector('.classDate')
-        //const signinTime = document.querySelector('.signinTime')
-        //const signoutTime = document.querySelector('.signoutTime')
-
         const centerName = document.querySelector('.centerName2')
         const courseName = document.querySelector('.courseName2')
+        const spotName = document.querySelector('.spotName2')
 
         bodyObj[studentName.name] = studentName.value.trim();
         bodyObj[studentID.name] = studentID.value.trim();
-        //bodyObj[classDate.name] = classDate.value.trim();
-        //bodyObj[signinTime.name] = signinTime.value.trim();
+
         const date = new Date()
-        console.log(date.toLocaleDateString());
-        console.log(date.toLocaleTimeString('it-IT'));
 
         bodyObj["課程日期yyyymmdd"] = date.toLocaleDateString();
         bodyObj["簽退時間"] = date.toLocaleTimeString('it-IT');
-
-        //bodyObj[signoutTime.name] = signoutTime.value.trim();
         bodyObj[centerName.name] = centerName.options[centerName.selectedIndex].value;
         bodyObj[courseName.name] = courseName.options[courseName.selectedIndex].value;
+        bodyObj[spotName.name] = spotName.options[spotName.selectedIndex].value;
 
         console.log(bodyObj);
-        //input 3~10 10 is note
-        //console.log(document.getElementsByTagName("input")[3].value);
-
         // transfer object to JSON and post
-
         const bodySize = Object.keys(bodyObj).length;
         if (bodyObj[studentName.name] && bodyObj[studentID.name] &&
-            bodyObj[centerName.name] && bodyObj[courseName.name]) {
-            console.log('if');
+            bodyObj[centerName.name] && bodyObj[courseName.name] &&
+            bodyObj[spotName.name]) {
 
             options.body = JSON.stringify(bodyObj);
             options.headers = {
@@ -317,13 +301,14 @@
 
             const response = await fetch(path, options);
             const json = await response.json();
-            console.log(json);
+            console.log(json.response);
 
+            //if success then clean the input
+            if(json.response == 'success'){
+                studentName.value = '';
+                studentID.value = '';
+            }
         }
-
-        studentName.value = '';
-        studentID.value = '';
-        //console.log(path);
         console.log(options);
 
     }
@@ -339,9 +324,10 @@
         }
     }
 
-    // show the info list dynamically from sheet 5
+    //show the info list dynamically from sheet
     async function appendSelectOption() {
         console.log('append');
+        // show the course info list from sheet 5
         const response = await fetch('/api/5', {
             method: 'GET'
         });
@@ -354,40 +340,100 @@
             let rowKey = Object.keys(json[prop]);
             let rowValue = Object.values(json[prop]);
             for (let i = 0; i < rowKey.length; i++) {
-
-                //console.log('key = ' + rowKey[i]);
-                //console.log('value = ' + rowValue[i]);
-
                 if (rowKey[i] == '課程名稱' && rowValue[i]) {
-                    //console.log('key = ' + rowKey[i]);
-                    //console.log('value = ' + rowValue[i]);
+                    console.log('key = ' + rowKey[i]);
+                    console.log('value = ' + rowValue[i]);
                     let option = document.createElement('option');
                     option.text = rowValue[i];
                     option.value = rowValue[i];
                     let select = document.querySelector('.courseName');
-                    let select1 = document.querySelector('.courseName1');
-                    let select2 = document.querySelector('.courseName2');
-
-                    //console.log(select);
-                    //console.log(option);
-
                     select.appendChild(option);
-                    select1.appendChild(option);
-                    select2.appendChild(option);
+                    //select.add(option);
+                    //console.log(select);
 
+                    let option1 = document.createElement('option');
+                    option1.text = rowValue[i];
+                    option1.value = rowValue[i];
+                    let select1 = document.querySelector('.courseName1');
+                    select1.appendChild(option1);
+                    //console.log(select1);
+
+                    let option2 = document.createElement('option');
+                    option2.text = rowValue[i];
+                    option2.value = rowValue[i];
+                    let select2 = document.querySelector('.courseName2');
+                    select2.appendChild(option2);
+                    //console.log(select2);
+                    //console.log(option);
                 }
-                /*else if (rowKey[i] == '樂齡學習中心名稱' && rowValue[i]) {
+            }
+        }
+        // show the course info list from sheet 2
+        const response2 = await fetch('/api/2', {
+            method: 'GET'
+        });
+        const json2 = await response2.json();
+        console.log(json2);
+        for (var prop2 in json2) {
+            console.log('append2');
+
+            console.log(Object.keys(json2[prop2]));
+            console.log(Object.values(json2[prop2]));
+            let rowKey = Object.keys(json2[prop2]);
+            let rowValue = Object.values(json2[prop2]);
+            for (let i = 0; i < rowKey.length; i++) {
+                if (rowKey[i] == '拓點村里' && rowValue[i]) {
+                    console.log('key = ' + rowKey[i]);
+                    console.log('value = ' + rowValue[i]);
+                    let option = document.createElement('option');
+                    option.text = rowValue[i];
+                    option.value = rowValue[i];
+                    let select = document.querySelector('.spotName');
+                    select.appendChild(option);
+                    //select.add(option);
+                    console.log(select);
+
+                    let option1 = document.createElement('option');
+                    option1.text = rowValue[i];
+                    option1.value = rowValue[i];
+                    let select1 = document.querySelector('.spotName1');
+                    select1.appendChild(option1);
+                    console.log(select1);
+
+                    let option2 = document.createElement('option');
+                    option2.text = rowValue[i];
+                    option2.value = rowValue[i];
+                    let select2 = document.querySelector('.spotName2');
+                    select2.appendChild(option2);
+                    console.log(select2);
+                    //console.log(option);
+                }
+                if (rowKey[i] == '樂齡學習中心名稱' && rowValue[i]) {
                     console.log('key = ' + rowKey[i]);
                     console.log('value = ' + rowValue[i]);
                     let option = document.createElement('option');
                     option.text = rowValue[i];
                     option.value = rowValue[i];
                     let select = document.querySelector('.centerName');
-                    console.log(select);
-                    console.log(option);
-
                     select.appendChild(option);
-                }*/
+                    //select.add(option);
+                    console.log(select);
+
+                    let option1 = document.createElement('option');
+                    option1.text = rowValue[i];
+                    option1.value = rowValue[i];
+                    let select1 = document.querySelector('.centerName1');
+                    select1.appendChild(option1);
+                    console.log(select1);
+
+                    let option2 = document.createElement('option');
+                    option2.text = rowValue[i];
+                    option2.value = rowValue[i];
+                    let select2 = document.querySelector('.centerName2');
+                    select2.appendChild(option2);
+                    console.log(select2);
+                    //console.log(option);
+                }
             }
         }
     }
