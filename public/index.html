@@ -45,7 +45,7 @@
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" defer></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js" defer></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.js" defer></script>
     <link rel="stylesheet" type="text/css" href="css/style2.css" defer />
 
     <style type="text/css">
@@ -177,6 +177,13 @@
                             </div>
                         </div>
                         <button class="btn btn-primary" id='signInButton' type="submit">Sign In</button>
+                        <button class="btn btn-primary hidden" id='loadingButton' type="button" disabled>
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                Loading...
+                        </button>
+                                <span class="badge badge-success hidden" id='successBadge'>Success</span>
+                                <span class="badge badge-danger hidden" id='failBadge'>Fail</span>
+
                     </form>
                 </div>
                 <!-- **** sign out nav-->
@@ -238,6 +245,12 @@
                             </div>
                         </div>
                         <button class="btn btn-danger" id='signOutButton' type="submit">Sign Out</button>
+                        <button class="btn btn-primary hidden" id='loadingButton2' type="button" disabled>
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                Loading...
+                        </button>
+                                <span class="badge badge-success hidden" id='successBadge2'>Success</span>
+                                <span class="badge badge-danger hidden" id='failBadge2'>Fail</span>
                     </form>
                 </div>
                 <!-- **** custom -->
@@ -265,7 +278,7 @@
                             <div class="col-md-4 mb-3">
                                 <label for="validationCustom03">課程日期yyyy/mm/dd</label>
                                 <input type="text" class="form-control classDate" id="validationCustom03"
-                                    name="課程日期yyyymmdd" placeholder="12-31-2019" required>
+                                    name="課程日期yyyymmdd" placeholder="2020/2/22" required>
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
@@ -273,7 +286,7 @@
                             <div class="col-md-4 mb-3">
                                 <label for="validationCustom04">簽到時間</label>
                                 <input type="text" class="form-control signinTime" id="validationCustom04" name="簽到時間"
-                                    placeholder="9:15" required>
+                                    placeholder="14:50:04" required>
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
@@ -281,7 +294,7 @@
                             <div class="col-md-4 mb-3">
                                 <label for="validationCustom05">簽退時間</label>
                                 <input type="text" class="form-control signoutTime" id="validationCustom05" name="簽退時間"
-                                    placeholder="10:55" required>
+                                    placeholder="16:23:43" required>
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
@@ -362,6 +375,7 @@
                     <th>課程日期yyyymmdd</th>
                     <th>簽到時間</th>
                     <th>簽退時間</th>
+                    <th>時數</th>
                 </tr>
             </thead>
             <tfoot>
@@ -377,6 +391,7 @@
                     <th>課程日期yyyymmdd</th>
                     <th>簽到時間</th>
                     <th>簽退時間</th>
+                    <th>時數</th>
                 </tr>
             </tfoot>
         </table>
@@ -480,6 +495,13 @@
                     <td align="center"><input type="checkbox" class="column_filter" id="col10_smart" checked="checked">
                     </td>
                 </tr>
+                <tr id="filter_col12" data-column="11">
+                        <td>Column - 時數</td>
+                        <td align="center"><input type="text" class="column_filter" id="col11_filter"></td>
+                        <td align="center"><input type="checkbox" class="column_filter" id="col11_regex"></td>
+                        <td align="center"><input type="checkbox" class="column_filter" id="col11_smart" checked="checked">
+                        </td>
+                    </tr>
             </tbody>
         </table>
 
