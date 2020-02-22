@@ -4,6 +4,9 @@ const {
     promisify
 } = require('util');
 
+// moment js
+var moment = require('moment');
+
 const app = express();
 const creds = require('./client_secret.json');
 const doc = new googlespreadsheet('<spreadsheet key>');
@@ -88,6 +91,7 @@ async function onPost(req, res) {
     req.body.課程id = `${courseRows[0].課程id}`;
     req.body.課程類型 = `${courseRows[0].課程類型}`;
     req.body.課程主題 = `${courseRows[0].課程主題}`;
+
     if(studentRows[0]){
         req.body.身分證字號 = `${studentRows[0].身分證字號}`;
     }
@@ -100,10 +104,81 @@ async function onPost(req, res) {
     //console.log(req);
 
     res.json({
-        responce: 'success'
+        response: 'success'
     });
 }
 app.post('/api', onPost);
+
+
+async function onPatch(req, res) {
+    await promisify(doc.useServiceAccountAuth)(creds);
+    const info = await promisify(doc.getInfo)();
+    //註冊紀錄(上課資訊)
+    sheet = info.worksheets[4];
+
+    console.log(req.body);
+    const date = new Date();
+    //console.log(date.toLocaleDateString());
+
+    const rows = await promisify(sheet.getRows)({
+        offset: 1,
+        //limit: 500,
+        query: `姓名 = ${req.body.姓名}`, 
+        //query: `課程日期yyyymmdd = ${date.toLocaleDateString()}`,
+        query: `樂齡學習中心名稱 = ${req.body.樂齡學習中心名稱}`,
+        query: `課程名稱 = ${req.body.課程名稱}`,
+        query: `拓點村里 = ${req.body.拓點村里}`,
+        query: `課程日期yyyymmdd = ${req.body.課程日期yyyymmdd}`,
+        query: `學員證字號 = ${req.body.學員證字號}`,
+    });
+
+    console.log(rows);
+    console.log(rows.length);
+
+    //console.log(rows[rows.length-1]);
+
+    for(let i = rows.length-1;i>=0;i--){
+        // match
+        if(rows[i].姓名 ==  req.body.姓名 &&
+            rows[i].學員證字號 ==  req.body.學員證字號 &&
+            rows[i].課程日期yyyymmdd ==  req.body.課程日期yyyymmdd &&
+            rows[i].樂齡學習中心名稱 ==  req.body.樂齡學習中心名稱 &&
+            rows[i].課程名稱 ==  req.body.課程名稱 &&
+            rows[i].拓點村里 ==  req.body.拓點村里) {
+
+            rows[i].簽退時間 = date.toLocaleTimeString('it-IT');
+            //console.log(date.toDateString());
+
+            //console.log(rows[i].簽到時間);
+            //console.log(rows[i].簽退時間);
+            //console.log(moment(rows[i].簽到時間 , 'HH:mm:ss'));
+            //console.log(moment(rows[i].簽退時間 , 'HH:mm:ss'));
+
+            //console.log(moment(rows[i].簽退時間 , 'HH:mm:ss') - moment(rows[i].簽到時間 , 'HH:mm:ss'));
+            const countMs = moment(rows[i].簽退時間 , 'HH:mm:ss') - moment(rows[i].簽到時間 , 'HH:mm:ss');
+            // have to use utc
+            const countHours = moment.utc(countMs , 'x').format('HH:mm:ss');
+            console.log(countHours);
+            rows[i].時數 = countHours;
+
+            await rows[i].save();
+        
+            res.json({
+                response: 'success'
+            });
+            break;
+        }
+        else if (i == 0) {
+            res.json({
+                response: 'fail'
+            });
+            break;
+        }
+    }
+
+
+}
+app.patch('/api', onPatch);
 
 
 const port = process.env.PORT || 3000;
