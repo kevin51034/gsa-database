@@ -62,6 +62,9 @@
                 {
                     data: '簽退時間'
                 },
+                {
+                    data: '時數'
+                },
 
             ],
 
@@ -240,6 +243,13 @@
             bodyObj[centerName.name] && bodyObj[courseName.name] &&
             bodyObj[spotName.name]) {
             console.log('if');
+            
+            //button css
+            const signInButton = document.querySelector('#signInButton');
+            signInButton.classList.add('hidden');
+            const loadingButton = document.querySelector('#loadingButton');
+            loadingButton.classList.remove('hidden');
+
 
             options.body = JSON.stringify(bodyObj);
             options.headers = {
@@ -250,6 +260,35 @@
             const response = await fetch(path, options);
             const json = await response.json();
             console.log(json);
+            if(json.response == 'success'){
+                const loadingButton = document.querySelector('#loadingButton');
+                loadingButton.classList.add('hidden');
+                const successBadge = document.querySelector('#successBadge');
+                successBadge.classList.remove('hidden');
+                studentName.value = '';
+                studentID.value = '';
+                const signInButton = document.querySelector('#signInButton');
+                signInButton.classList.remove('hidden');
+
+                //fade out effect
+                successBadge.classList.add('fade-out')
+                setTimeout(function(){ successBadge.classList.add('hidden') }, 1000);
+
+                
+            }else {
+                const loadingButton = document.querySelector('#loadingButton');
+                loadingButton.classList.add('hidden');
+                const failBadge = document.querySelector('#failBadge');
+                failBadge.classList.remove('hidden');
+                studentName.value = '';
+                studentID.value = '';
+                const signInButton = document.querySelector('#signInButton');
+                signInButton.classList.remove('hidden');
+
+                //fade out effect
+                failBadge.classList.add('fade-out')
+                setTimeout(function(){ failBadge.classList.add('hidden') }, 1000);
+            }
 
         }
 
@@ -299,14 +338,46 @@
                 'Content-Type': 'application/json'
             };
 
+            //button css
+            const signOutButton = document.querySelector('#signOutButton');
+            signOutButton.classList.add('hidden');
+            const loadingButton2 = document.querySelector('#loadingButton2');
+            loadingButton2.classList.remove('hidden');
+
             const response = await fetch(path, options);
             const json = await response.json();
             console.log(json.response);
 
+            //css effect
             //if success then clean the input
             if(json.response == 'success'){
+                const loadingButton2 = document.querySelector('#loadingButton2');
+                loadingButton2.classList.add('hidden');
+                const successBadge2 = document.querySelector('#successBadge2');
+                successBadge2.classList.remove('hidden');
                 studentName.value = '';
                 studentID.value = '';
+                const signOutButton = document.querySelector('#signOutButton');
+                signOutButton.classList.remove('hidden');
+
+                //fade out effect
+                successBadge2.classList.add('fade-out')
+                setTimeout(function(){ successBadge2.classList.add('hidden') }, 1000);
+
+                
+            }else {
+                const loadingButton2 = document.querySelector('#loadingButton2');
+                loadingButton2.classList.add('hidden');
+                const failBadge2 = document.querySelector('#failBadge2');
+                failBadge2.classList.remove('hidden');
+                studentName.value = '';
+                studentID.value = '';
+                const signOutButton = document.querySelector('#signOutButton');
+                signOutButton.classList.remove('hidden');
+
+                //fade out effect
+                failBadge2.classList.add('fade-out')
+                setTimeout(function(){ failBadge2.classList.add('hidden') }, 1000);
             }
         }
         console.log(options);
