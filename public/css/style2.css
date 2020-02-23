@@ -1,0 +1,99 @@
+.dt-buttons {
+    margin-left: 50px;
+}
+
+.dt-buttons button:focus {
+    border-bottom: 2px solid black;
+    outline: none;
+}
+
+.dt-buttons button {
+    padding: 12px;
+    background-color: white;
+    color: black;
+    border: 2px solid black;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-family: Helvetica, Arial, sans-serif;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+.dt-buttons button:hover {
+    background-color: black;
+    color: white;
+}
+
+.dt-buttons button:focus,
+button:focus,
+select:focus,
+#preview-area:focus {
+    outline: none;
+}
+
+#datatable {
+    margin-left: -2%;
+    width: 90%;
+}
+
+.fade-out {
+    animation: fadeOut ease 2s;
+    -webkit-animation: fadeOut ease 2s;
+    -moz-animation: fadeOut ease 2s;
+    -o-animation: fadeOut ease 2s;
+    -ms-animation: fadeOut ease 2s;
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@-moz-keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@-o-keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@-ms-keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.hidden {
+    display: none;
+}

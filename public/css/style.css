@@ -107,7 +107,6 @@ select {
 */
 .header{
     position: relative;
-    //opacity:0.70;
 }
 .content{
     position: absolute;
@@ -127,7 +126,6 @@ select {
     color: white;
     opacity:0.90;
     padding:20px;
-    //max-width: 780px;
     transition: 1000ms;
 }
 
