@@ -101,8 +101,8 @@
         resultsDiv.textContent = JSON.stringify(json, null, 2);
         //console.log(resultsDiv.textContent);
 
-        const resultsContainer = document.querySelector('#results-container');
-        resultsContainer.classList.remove('hidden');
+        //const resultsContainer = document.querySelector('#results-container');
+        //resultsContainer.classList.remove('hidden');
         const datatable = document.querySelector('#datatable');
         datatable.classList.remove('hidden');
 
@@ -123,7 +123,6 @@
             $('#global_smart').prop('checked')
         ).draw();
     }
-
 
     function filterColumn(i) {
         $('#datatable').DataTable().column(i).search(
@@ -163,7 +162,7 @@
         bodyObj[centerName.name] = centerName.options[centerName.selectedIndex].value;
         bodyObj[courseName.name] = courseName.options[courseName.selectedIndex].value;
 
-        console.log(bodyObj);
+        //console.log(bodyObj);
         //input 3~10 10 is note
         //console.log(document.getElementsByTagName("input")[3].value);
 
@@ -181,14 +180,14 @@
 
             const response = await fetch(path, options);
             const json = await response.json();
-            console.log(json);
+            //console.log(json);
 
         }
 
         studentName.value = '';
         studentID.value = '';
         //console.log(path);
-        console.log(options);
+        //console.log(options);
 
     }
 
@@ -221,8 +220,8 @@
         //bodyObj[classDate.name] = classDate.value.trim();
         //bodyObj[signinTime.name] = signinTime.value.trim();
         const date = new Date()
-        console.log(date.toLocaleDateString());
-        console.log(date.toLocaleTimeString('it-IT'));
+        //console.log(date.toLocaleDateString());
+        //console.log(date.toLocaleTimeString('it-IT'));
 
         bodyObj["課程日期yyyymmdd"] = date.toLocaleDateString();
         bodyObj["簽到時間"] = date.toLocaleTimeString('it-IT');
@@ -232,7 +231,7 @@
         bodyObj[courseName.name] = courseName.options[courseName.selectedIndex].value;
         bodyObj[spotName.name] = spotName.options[spotName.selectedIndex].value;
 
-        console.log(bodyObj);
+        //console.log(bodyObj);
         //input 3~10 10 is note
         //console.log(document.getElementsByTagName("input")[3].value);
 
@@ -242,7 +241,6 @@
         if (bodyObj[studentName.name] && bodyObj[studentID.name] &&
             bodyObj[centerName.name] && bodyObj[courseName.name] &&
             bodyObj[spotName.name]) {
-            console.log('if');
             
             //button css
             const signInButton = document.querySelector('#signInButton');
@@ -259,7 +257,7 @@
 
             const response = await fetch(path, options);
             const json = await response.json();
-            console.log(json);
+            //console.log(json);
             if(json.response == 'success'){
                 const loadingButton = document.querySelector('#loadingButton');
                 loadingButton.classList.add('hidden');
@@ -295,7 +293,7 @@
         studentName.value = '';
         studentID.value = '';
         //console.log(path);
-        console.log(options);
+        //console.log(options);
 
     }
 
@@ -325,7 +323,7 @@
         bodyObj[courseName.name] = courseName.options[courseName.selectedIndex].value;
         bodyObj[spotName.name] = spotName.options[spotName.selectedIndex].value;
 
-        console.log(bodyObj);
+        //console.log(bodyObj);
         // transfer object to JSON and post
         const bodySize = Object.keys(bodyObj).length;
         if (bodyObj[studentName.name] && bodyObj[studentID.name] &&
@@ -346,7 +344,7 @@
 
             const response = await fetch(path, options);
             const json = await response.json();
-            console.log(json.response);
+            //console.log(json.response);
 
             //css effect
             //if success then clean the input
@@ -380,7 +378,7 @@
                 setTimeout(function(){ failBadge2.classList.add('hidden') }, 1000);
             }
         }
-        console.log(options);
+        //console.log(options);
 
     }
 
@@ -412,8 +410,8 @@
             let rowValue = Object.values(json[prop]);
             for (let i = 0; i < rowKey.length; i++) {
                 if (rowKey[i] == '課程名稱' && rowValue[i]) {
-                    console.log('key = ' + rowKey[i]);
-                    console.log('value = ' + rowValue[i]);
+                    //console.log('key = ' + rowKey[i]);
+                    //console.log('value = ' + rowValue[i]);
                     let option = document.createElement('option');
                     option.text = rowValue[i];
                     option.value = rowValue[i];
@@ -444,69 +442,133 @@
             method: 'GET'
         });
         const json2 = await response2.json();
-        console.log(json2);
+        //console.log(json2);
         for (var prop2 in json2) {
             console.log('append2');
 
-            console.log(Object.keys(json2[prop2]));
-            console.log(Object.values(json2[prop2]));
+            //console.log(Object.keys(json2[prop2]));
+            //console.log(Object.values(json2[prop2]));
             let rowKey = Object.keys(json2[prop2]);
             let rowValue = Object.values(json2[prop2]);
             for (let i = 0; i < rowKey.length; i++) {
                 if (rowKey[i] == '拓點村里' && rowValue[i]) {
-                    console.log('key = ' + rowKey[i]);
-                    console.log('value = ' + rowValue[i]);
+                    //console.log('key = ' + rowKey[i]);
+                    //console.log('value = ' + rowValue[i]);
                     let option = document.createElement('option');
                     option.text = rowValue[i];
                     option.value = rowValue[i];
                     let select = document.querySelector('.spotName');
                     select.appendChild(option);
                     //select.add(option);
-                    console.log(select);
+                    //console.log(select);
 
                     let option1 = document.createElement('option');
                     option1.text = rowValue[i];
                     option1.value = rowValue[i];
                     let select1 = document.querySelector('.spotName1');
                     select1.appendChild(option1);
-                    console.log(select1);
+                    //console.log(select1);
 
                     let option2 = document.createElement('option');
                     option2.text = rowValue[i];
                     option2.value = rowValue[i];
                     let select2 = document.querySelector('.spotName2');
                     select2.appendChild(option2);
-                    console.log(select2);
+                    //console.log(select2);
                     //console.log(option);
                 }
                 if (rowKey[i] == '樂齡學習中心名稱' && rowValue[i]) {
-                    console.log('key = ' + rowKey[i]);
-                    console.log('value = ' + rowValue[i]);
+                    //console.log('key = ' + rowKey[i]);
+                    //console.log('value = ' + rowValue[i]);
                     let option = document.createElement('option');
                     option.text = rowValue[i];
                     option.value = rowValue[i];
                     let select = document.querySelector('.centerName');
                     select.appendChild(option);
                     //select.add(option);
-                    console.log(select);
+                    //console.log(select);
 
                     let option1 = document.createElement('option');
                     option1.text = rowValue[i];
                     option1.value = rowValue[i];
                     let select1 = document.querySelector('.centerName1');
                     select1.appendChild(option1);
-                    console.log(select1);
+                    //console.log(select1);
 
                     let option2 = document.createElement('option');
                     option2.text = rowValue[i];
                     option2.value = rowValue[i];
                     let select2 = document.querySelector('.centerName2');
                     select2.appendChild(option2);
-                    console.log(select2);
+                    //console.log(select2);
                     //console.log(option);
                 }
             }
         }
+    }
+
+    async function showHome() {
+        const section1 = document.querySelector('#section1');
+        section1.classList.remove('hidden');
+        const section2 = document.querySelector('#section2');
+        section2.classList.add('hidden');
+    }
+
+    async function showHistory() {
+        const section1 = document.querySelector('#section1');
+        section1.classList.add('hidden');
+        const section2 = document.querySelector('#section2');
+        section2.classList.remove('hidden');
+    }
+
+    async function loadHistoryDatatable() {
+        console.log('loadHistory');
+
+        const date = new Date;
+        const response = await fetch(`/api/4/today`, {
+            method: 'GET'
+        });
+        const json = await response.json();
+        console.log(json);
+        $('#datatable2').DataTable().destroy();
+
+        $('#datatable2').DataTable({
+            dom: 'lBfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'print', 'colvis',
+            ],
+            
+            data: json,
+            columns: [
+                {
+                    data: '姓名'
+                },
+                {
+                    data: '學員證字號'
+                },
+                {
+                    data: '樂齡學習中心名稱'
+                },
+                {
+                    data: '拓點村里'
+                },
+                {
+                    data: '課程名稱'
+                },
+                {
+                    data: '課程日期yyyymmdd'
+                },
+                {
+                    data: '簽到時間'
+                },
+                {
+                    data: '簽退時間'
+                },
+                {
+                    data: '時數'
+                },
+            ],
+        });
     }
 
     function getParameters() {
@@ -558,6 +620,12 @@
     const form = document.querySelector('.fetchForm');
     form.addEventListener('submit', onSubmit);
 
+    const navHome = document.querySelector('#navHome');
+    navHome.addEventListener('click', showHome);
+
+    const navHistory = document.querySelector('#navHistory');
+    navHistory.addEventListener('click', showHistory);
+
     window.addEventListener('load', function () {
         // Fetch all the forms we want to apply custom Bootstrap validation styles to
         var forms = document.getElementsByClassName('needs-validation');
@@ -574,6 +642,7 @@
     }, false);
 
     appendSelectOption();
+    loadHistoryDatatable();
     //createRequestPreview();
 
 })();
