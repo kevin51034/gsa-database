@@ -7,7 +7,7 @@
 
     <title>Spreadsheet Tester</title>
     <script src="js/script.js" defer></script>
-    <link rel="stylesheet" type="text/css" href="css/style.css" defer />
+    <link rel="stylesheet" type="text/css" href="css/style.css" defer/>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -16,7 +16,9 @@
     <link rel="stylesheet" type="text/css"
         href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css" />
 
-    </script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.2/css/uikit.min.css" defer/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.uikit.min.css" defer/>
+
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" defer></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" defer></script>
@@ -70,11 +72,12 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="#" id='navHome'>Home <span class="sr-only">(current)</span></a>
                 </li>
-                <!--<li class="nav-item">
-                        <a class="nav-link" href="#">Features</a>
+                <li class="nav-item">
+                        <a class="nav-link" href="#" id='navHistory'>History</a>
                     </li>
+                    <!--
                     <li class="nav-item">
                         <a class="nav-link" href="#">Pricing</a>
                     </li>
@@ -94,7 +97,7 @@
         </div>
     </header>
 
-    <section class='sec'>
+    <section class='sec' id='section1'>
         <h1></h1>
         <span class="border">
         </span>
@@ -361,6 +364,7 @@
             </div>
         </div>
 
+        <!-- homepage datatable -->
         <table id="datatable" class="display compact hidden" style="width:95%">
             <thead>
                 <tr>
@@ -372,7 +376,7 @@
                     <th>拓點村里</th>
                     <th>課程id</th>
                     <th>課程名稱</th>
-                    <th>課程日期yyyymmdd</th>
+                    <th>課程日期yyyy/mm/dd</th>
                     <th>簽到時間</th>
                     <th>簽退時間</th>
                     <th>時數</th>
@@ -388,7 +392,7 @@
                     <th>拓點村里</th>
                     <th>課程id</th>
                     <th>課程名稱</th>
-                    <th>課程日期yyyymmdd</th>
+                    <th>課程日期yyyy/mm/dd</th>
                     <th>簽到時間</th>
                     <th>簽退時間</th>
                     <th>時數</th>
@@ -475,7 +479,7 @@
                     </td>
                 </tr>
                 <tr id="filter_col9" data-column="8">
-                    <td>Column - 課程日期yyyymmdd</td>
+                    <td>Column - 課程日期yyyy/mm/dd</td>
                     <td align="center"><input type="text" class="column_filter" id="col8_filter"></td>
                     <td align="center"><input type="checkbox" class="column_filter" id="col8_regex"></td>
                     <td align="center"><input type="checkbox" class="column_filter" id="col8_smart" checked="checked">
@@ -510,6 +514,42 @@
             <h2>JSON :</h2>
             <pre id="results"></pre>
         </section>
+    </section>
+
+    <br><br>
+
+    <!-- historypage  -->
+    <section class='sec hidden' id='section2'>
+        <!-- historypage datatable -->
+        <table id="datatable2" class="uk-table uk-table-hover uk-table-striped" style="width:95%">
+            <thead>
+                <tr>
+                    <th>姓名</th>
+                    <th>學員證字號</th>
+                    <th>樂齡學習中心名稱</th>
+                    <th>拓點村里</th>
+                    <th>課程名稱</th>
+                    <th>課程日期yyyy/mm/dd</th>
+                    <th>簽到時間</th>
+                    <th>簽退時間</th>
+                    <th>時數</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>姓名</th>
+                    <th>學員證字號</th>
+                    <th>樂齡學習中心名稱</th>
+                    <th>拓點村里</th>
+                    <th>課程名稱</th>
+                    <th>課程日期yyyy/mm/dd</th>
+                    <th>簽到時間</th>
+                    <th>簽退時間</th>
+                    <th>時數</th>
+                </tr>
+            </tfoot>
+        </table>
+
     </section>
 </body>
 
