@@ -54,7 +54,7 @@
                     data: '課程名稱'
                 },
                 {
-                    data: '課程日期yyyymmdd'
+                    data: '課程日期'
                 },
                 {
                     data: '簽到時間'
@@ -132,6 +132,7 @@
         ).draw();
     }
 
+    // custom post
     async function onPostform(event) {
         event.preventDefault();
         const path = '/api';
@@ -140,9 +141,6 @@
             method: 'POST'
         };
 
-        //POST
-        //const formDataContainer = document.querySelector('#form-values');
-        //const allRows = bodyDataContainer.querySelectorAll('.body-row');
         const bodyObj = {};
 
         const studentName = document.querySelector('.studentName')
@@ -167,8 +165,6 @@
         //console.log(document.getElementsByTagName("input")[3].value);
 
         // transfer object to JSON and post
-
-        const bodySize = Object.keys(bodyObj).length;
         if (bodyObj[studentName.name] && bodyObj[studentID.name] && bodyObj[classDate.name] &&
             bodyObj[signinTime.name] && bodyObj[signoutTime.name] &&
             bodyObj[centerName.name] && bodyObj[courseName.name]) {
@@ -180,15 +176,10 @@
 
             const response = await fetch(path, options);
             const json = await response.json();
-            //console.log(json);
-
         }
 
         studentName.value = '';
         studentID.value = '';
-        //console.log(path);
-        //console.log(options);
-
     }
 
     async function signinForm(event) {
@@ -200,40 +191,20 @@
             method: 'POST'
         };
 
-        //POST
-        //const formDataContainer = document.querySelector('#form-values');
-        //const allRows = bodyDataContainer.querySelectorAll('.body-row');
         const bodyObj = {};
 
         const studentName = document.querySelector('.studentName1')
         const studentID = document.querySelector('.studentID1')
-        //const classDate = document.querySelector('.classDate')
-        //const signinTime = document.querySelector('.signinTime')
-        //const signoutTime = document.querySelector('.signoutTime')
-
         const centerName = document.querySelector('.centerName1')
         const courseName = document.querySelector('.courseName1')
         const spotName = document.querySelector('.spotName1')
 
         bodyObj[studentName.name] = studentName.value.trim();
         bodyObj[studentID.name] = studentID.value.trim();
-        //bodyObj[classDate.name] = classDate.value.trim();
-        //bodyObj[signinTime.name] = signinTime.value.trim();
-        const date = new Date()
-        //console.log(date.toLocaleDateString());
-        //console.log(date.toLocaleTimeString('it-IT'));
 
-        bodyObj["課程日期yyyymmdd"] = date.toLocaleDateString();
-        bodyObj["簽到時間"] = date.toLocaleTimeString('it-IT');
-
-        //bodyObj[signoutTime.name] = signoutTime.value.trim();
         bodyObj[centerName.name] = centerName.options[centerName.selectedIndex].value;
         bodyObj[courseName.name] = courseName.options[courseName.selectedIndex].value;
         bodyObj[spotName.name] = spotName.options[spotName.selectedIndex].value;
-
-        //console.log(bodyObj);
-        //input 3~10 10 is note
-        //console.log(document.getElementsByTagName("input")[3].value);
 
         // transfer object to JSON and post
 
@@ -269,7 +240,7 @@
                 signInButton.classList.remove('hidden');
 
                 //fade out effect
-                successBadge.classList.add('fade-out')
+                successBadge.classList.add('fade-out-btn')
                 setTimeout(function(){ successBadge.classList.add('hidden') }, 1000);
 
                 
@@ -284,17 +255,12 @@
                 signInButton.classList.remove('hidden');
 
                 //fade out effect
-                failBadge.classList.add('fade-out')
+                failBadge.classList.add('fade-out-btn')
                 setTimeout(function(){ failBadge.classList.add('hidden') }, 1000);
             }
-
         }
-
         studentName.value = '';
         studentID.value = '';
-        //console.log(path);
-        //console.log(options);
-
     }
 
     async function signoutForm(event) {
@@ -314,18 +280,12 @@
 
         bodyObj[studentName.name] = studentName.value.trim();
         bodyObj[studentID.name] = studentID.value.trim();
-
-        const date = new Date()
-
-        bodyObj["課程日期yyyymmdd"] = date.toLocaleDateString();
-        bodyObj["簽退時間"] = date.toLocaleTimeString('it-IT');
         bodyObj[centerName.name] = centerName.options[centerName.selectedIndex].value;
         bodyObj[courseName.name] = courseName.options[courseName.selectedIndex].value;
         bodyObj[spotName.name] = spotName.options[spotName.selectedIndex].value;
 
         //console.log(bodyObj);
         // transfer object to JSON and post
-        const bodySize = Object.keys(bodyObj).length;
         if (bodyObj[studentName.name] && bodyObj[studentID.name] &&
             bodyObj[centerName.name] && bodyObj[courseName.name] &&
             bodyObj[spotName.name]) {
@@ -359,7 +319,7 @@
                 signOutButton.classList.remove('hidden');
 
                 //fade out effect
-                successBadge2.classList.add('fade-out')
+                successBadge2.classList.add('fade-out-btn')
                 setTimeout(function(){ successBadge2.classList.add('hidden') }, 1000);
 
                 
@@ -374,12 +334,10 @@
                 signOutButton.classList.remove('hidden');
 
                 //fade out effect
-                failBadge2.classList.add('fade-out')
+                failBadge2.classList.add('fade-out-btn')
                 setTimeout(function(){ failBadge2.classList.add('hidden') }, 1000);
             }
         }
-        //console.log(options);
-
     }
 
     async function changeFiltertable(event) {
@@ -508,23 +466,41 @@
     }
 
     async function showHome() {
-        const section1 = document.querySelector('#section1');
-        section1.classList.remove('hidden');
         const section2 = document.querySelector('#section2');
-        section2.classList.add('hidden');
+        section2.classList.add('fade-out');
+        section2.classList.remove('fade-in');
+        setTimeout(function(){ section2.classList.add('hidden') }, 400);
+
+        const section1 = document.querySelector('#section1');
+        section1.classList.add('fade-in');
+        section1.classList.remove('fade-out');
+
+        setTimeout(function(){ section1.classList.remove('hidden') }, 500);
+
+        //section1.classList.remove('hidden');
+        //section2.classList.add('hidden');
     }
 
     async function showHistory() {
-        const section1 = document.querySelector('#section1');
+        /*const section1 = document.querySelector('#section1');
         section1.classList.add('hidden');
         const section2 = document.querySelector('#section2');
-        section2.classList.remove('hidden');
+        section2.classList.remove('hidden');*/
+        const section1 = document.querySelector('#section1');
+        section1.classList.add('fade-out');
+        section1.classList.remove('fade-in');
+        setTimeout(function(){ section1.classList.add('hidden') }, 400);
+
+        const section2 = document.querySelector('#section2');
+        section2.classList.add('fade-in');
+        section2.classList.remove('fade-out');
+        setTimeout(function(){ section2.classList.remove('hidden') }, 500);
     }
 
     async function loadHistoryDatatable() {
         console.log('loadHistory');
 
-        const date = new Date;
+        //const date = new Date;
         const response = await fetch(`/api/4/today`, {
             method: 'GET'
         });
@@ -556,7 +532,7 @@
                     data: '課程名稱'
                 },
                 {
-                    data: '課程日期yyyymmdd'
+                    data: '課程日期'
                 },
                 {
                     data: '簽到時間'
@@ -569,6 +545,19 @@
                 },
             ],
         });
+    }
+    
+    async function reloadHistory() {
+        const section2 = document.querySelector('#section2');
+        section2.classList.remove('fade-in');
+        section2.classList.add('fade-out');
+        setTimeout(function(){ section2.classList.add('hidden') }, 400);
+
+        await loadHistoryDatatable()
+
+        section2.classList.remove('fade-out');
+        section2.classList.add('fade-in');
+        setTimeout(function(){ section2.classList.remove('hidden') }, 500);
     }
 
     function getParameters() {
@@ -625,6 +614,9 @@
 
     const navHistory = document.querySelector('#navHistory');
     navHistory.addEventListener('click', showHistory);
+
+    const reloadButton = document.querySelector('#reloadButton');
+    reloadButton.addEventListener('click', reloadHistory);
 
     window.addEventListener('load', function () {
         // Fetch all the forms we want to apply custom Bootstrap validation styles to
