@@ -28,9 +28,9 @@
                 'copy', 'csv', 'excel', 'print', 'colvis', //'pdf'
             ],
             
-            data: json,
+            data: json.註冊紀錄,
             columns: [{
-                    data: '中心id'
+                    data: '中心ID'
                 },
                 {
                     data: '姓名'
@@ -48,7 +48,7 @@
                     data: '拓點村里'
                 },
                 {
-                    data: '課程id'
+                    data: '課程ID'
                 },
                 {
                     data: '課程名稱'
@@ -111,10 +111,6 @@
         loading.classList.add('hidden');
     }
 
-    /*setInterval( function () {
-        $('#datatable').DataTable().reload( null, false ); // user paging is not reset on reload
-        console.log('reload');
-    }, 10000 );*/
 
     function filterGlobal() {
         $('#datatable').DataTable().search(
@@ -132,10 +128,21 @@
         ).draw();
     }
 
+    async function changeFiltertable(event) {
+        event.preventDefault();
+
+        const filterTable = document.querySelector('#filterTable');
+        if (filterTable.classList.contains('hidden')) {
+            filterTable.classList.remove('hidden');
+        } else {
+            filterTable.classList.add('hidden');
+        }
+    }
+
     // custom post
     async function onPostform(event) {
         event.preventDefault();
-        const path = '/api';
+        const path = '/api/customize';
 
         const options = {
             method: 'POST'
@@ -151,6 +158,7 @@
 
         const centerName = document.querySelector('.centerName')
         const courseName = document.querySelector('.courseName')
+        const spotName = document.querySelector('.spotName')
 
         bodyObj[studentName.name] = studentName.value.trim();
         bodyObj[studentID.name] = studentID.value.trim();
@@ -159,6 +167,7 @@
         bodyObj[signoutTime.name] = signoutTime.value.trim();
         bodyObj[centerName.name] = centerName.options[centerName.selectedIndex].value;
         bodyObj[courseName.name] = courseName.options[courseName.selectedIndex].value;
+        bodyObj[spotName.name] = spotName.options[spotName.selectedIndex].value;
 
         //console.log(bodyObj);
         //input 3~10 10 is note
@@ -168,6 +177,13 @@
         if (bodyObj[studentName.name] && bodyObj[studentID.name] && bodyObj[classDate.name] &&
             bodyObj[signinTime.name] && bodyObj[signoutTime.name] &&
             bodyObj[centerName.name] && bodyObj[courseName.name]) {
+
+            //button css
+            const postButton = document.querySelector('#postButton');
+            postButton.classList.add('hidden');
+            const loadingButton = document.querySelector('#loadingButton3');
+            loadingButton.classList.remove('hidden');
+
             options.body = JSON.stringify(bodyObj);
             options.headers = {
                 'Accept': 'application/json',
@@ -176,8 +192,41 @@
 
             const response = await fetch(path, options);
             const json = await response.json();
-        }
+            console.log(json);
+            if (json.response == 'success') {
+                const loadingButton = document.querySelector('#loadingButton3');
+                loadingButton.classList.add('hidden');
+                const successBadge = document.querySelector('#successBadge3');
+                successBadge.classList.remove('hidden');
+                studentName.value = '';
+                studentID.value = '';
+                const postButton = document.querySelector('#postButton');
+                postButton.classList.remove('hidden');
 
+                //fade out effect
+                successBadge.classList.add('fade-out-btn')
+                setTimeout(function () {
+                    successBadge.classList.add('hidden')
+                }, 1000);
+
+
+            } else {
+                const loadingButton = document.querySelector('#loadingButton3');
+                loadingButton.classList.add('hidden');
+                const failBadge = document.querySelector('#failBadge3');
+                failBadge.classList.remove('hidden');
+                studentName.value = '';
+                studentID.value = '';
+                const signInButton = document.querySelector('#postButton');
+                signInButton.classList.remove('hidden');
+
+                //fade out effect
+                failBadge.classList.add('fade-out-btn')
+                setTimeout(function () {
+                    failBadge.classList.add('hidden')
+                }, 1000);
+            }
+        }
         studentName.value = '';
         studentID.value = '';
     }
@@ -212,7 +261,7 @@
         if (bodyObj[studentName.name] && bodyObj[studentID.name] &&
             bodyObj[centerName.name] && bodyObj[courseName.name] &&
             bodyObj[spotName.name]) {
-            
+
             //button css
             const signInButton = document.querySelector('#signInButton');
             signInButton.classList.add('hidden');
@@ -228,8 +277,8 @@
 
             const response = await fetch(path, options);
             const json = await response.json();
-            //console.log(json);
-            if(json.response == 'success'){
+            console.log(json);
+            if (json.response == 'success') {
                 const loadingButton = document.querySelector('#loadingButton');
                 loadingButton.classList.add('hidden');
                 const successBadge = document.querySelector('#successBadge');
@@ -241,10 +290,12 @@
 
                 //fade out effect
                 successBadge.classList.add('fade-out-btn')
-                setTimeout(function(){ successBadge.classList.add('hidden') }, 1000);
+                setTimeout(function () {
+                    successBadge.classList.add('hidden')
+                }, 1000);
 
-                
-            }else {
+
+            } else {
                 const loadingButton = document.querySelector('#loadingButton');
                 loadingButton.classList.add('hidden');
                 const failBadge = document.querySelector('#failBadge');
@@ -256,7 +307,9 @@
 
                 //fade out effect
                 failBadge.classList.add('fade-out-btn')
-                setTimeout(function(){ failBadge.classList.add('hidden') }, 1000);
+                setTimeout(function () {
+                    failBadge.classList.add('hidden')
+                }, 1000);
             }
         }
         studentName.value = '';
@@ -304,11 +357,11 @@
 
             const response = await fetch(path, options);
             const json = await response.json();
-            //console.log(json.response);
+            console.log(json);
 
             //css effect
             //if success then clean the input
-            if(json.response == 'success'){
+            if (json.response == 'success') {
                 const loadingButton2 = document.querySelector('#loadingButton2');
                 loadingButton2.classList.add('hidden');
                 const successBadge2 = document.querySelector('#successBadge2');
@@ -320,10 +373,12 @@
 
                 //fade out effect
                 successBadge2.classList.add('fade-out-btn')
-                setTimeout(function(){ successBadge2.classList.add('hidden') }, 1000);
+                setTimeout(function () {
+                    successBadge2.classList.add('hidden')
+                }, 1000);
 
-                
-            }else {
+
+            } else {
                 const loadingButton2 = document.querySelector('#loadingButton2');
                 loadingButton2.classList.add('hidden');
                 const failBadge2 = document.querySelector('#failBadge2');
@@ -335,19 +390,10 @@
 
                 //fade out effect
                 failBadge2.classList.add('fade-out-btn')
-                setTimeout(function(){ failBadge2.classList.add('hidden') }, 1000);
+                setTimeout(function () {
+                    failBadge2.classList.add('hidden')
+                }, 1000);
             }
-        }
-    }
-
-    async function changeFiltertable(event) {
-        event.preventDefault();
-
-        const filterTable = document.querySelector('#filterTable');
-        if (filterTable.classList.contains('hidden')) {
-            filterTable.classList.remove('hidden');
-        } else {
-            filterTable.classList.add('hidden');
         }
     }
 
@@ -360,108 +406,67 @@
         });
         const json = await response.json();
         //console.log(json);
+        //console.log(json.中心課程[0].課程名稱);
 
-        for (var prop in json) {
-            //console.log(Object.keys(json[prop]));
-            //console.log(Object.values(json[prop]));
-            let rowKey = Object.keys(json[prop]);
-            let rowValue = Object.values(json[prop]);
-            for (let i = 0; i < rowKey.length; i++) {
-                if (rowKey[i] == '課程名稱' && rowValue[i]) {
-                    //console.log('key = ' + rowKey[i]);
-                    //console.log('value = ' + rowValue[i]);
-                    let option = document.createElement('option');
-                    option.text = rowValue[i];
-                    option.value = rowValue[i];
-                    let select = document.querySelector('.courseName');
-                    select.appendChild(option);
-                    //select.add(option);
-                    //console.log(select);
+        for (let i = 0; i < json.中心課程.length; i++) {
+            let option = document.createElement('option');
+            option.text = json.中心課程[i].課程名稱;
+            option.value = json.中心課程[i].課程名稱;
+            let select = document.querySelector('.courseName');
+            select.appendChild(option);
 
-                    let option1 = document.createElement('option');
-                    option1.text = rowValue[i];
-                    option1.value = rowValue[i];
-                    let select1 = document.querySelector('.courseName1');
-                    select1.appendChild(option1);
-                    //console.log(select1);
+            let option1 = document.createElement('option');
+            option1.text = json.中心課程[i].課程名稱;
+            option1.value = json.中心課程[i].課程名稱;
+            let select1 = document.querySelector('.courseName1');
+            select1.appendChild(option1);
 
-                    let option2 = document.createElement('option');
-                    option2.text = rowValue[i];
-                    option2.value = rowValue[i];
-                    let select2 = document.querySelector('.courseName2');
-                    select2.appendChild(option2);
-                    //console.log(select2);
-                    //console.log(option);
-                }
-            }
+            let option2 = document.createElement('option');
+            option2.text = json.中心課程[i].課程名稱;
+            option2.value = json.中心課程[i].課程名稱;
+            let select2 = document.querySelector('.courseName2');
+            select2.appendChild(option2);
         }
+
+
         // show the course info list from sheet 2
         const response2 = await fetch('/api/2', {
             method: 'GET'
         });
         const json2 = await response2.json();
         //console.log(json2);
-        for (var prop2 in json2) {
-            console.log('append2');
 
-            //console.log(Object.keys(json2[prop2]));
-            //console.log(Object.values(json2[prop2]));
-            let rowKey = Object.keys(json2[prop2]);
-            let rowValue = Object.values(json2[prop2]);
-            for (let i = 0; i < rowKey.length; i++) {
-                if (rowKey[i] == '拓點村里' && rowValue[i]) {
-                    //console.log('key = ' + rowKey[i]);
-                    //console.log('value = ' + rowValue[i]);
-                    let option = document.createElement('option');
-                    option.text = rowValue[i];
-                    option.value = rowValue[i];
-                    let select = document.querySelector('.spotName');
-                    select.appendChild(option);
-                    //select.add(option);
-                    //console.log(select);
+        //console.log(json2);
+        //console.log(json2.樂齡中心資料[0].拓點村里);
+        for (let i = 0; i < json2.樂齡中心資料.length; i++) {
+            let optionn = document.createElement('option');
+            optionn.text = json2.樂齡中心資料[i].樂齡學習中心名稱;
+            optionn.value = json2.樂齡中心資料[i].樂齡學習中心名稱;
+            document.querySelector('.centerName').appendChild(optionn);
 
-                    let option1 = document.createElement('option');
-                    option1.text = rowValue[i];
-                    option1.value = rowValue[i];
-                    let select1 = document.querySelector('.spotName1');
-                    select1.appendChild(option1);
-                    //console.log(select1);
+            let optionn1 = document.createElement('option');
+            optionn1.text = json2.樂齡中心資料[i].樂齡學習中心名稱;
+            optionn1.value = json2.樂齡中心資料[i].樂齡學習中心名稱;
+            document.querySelector('.centerName1').appendChild(optionn1);
 
-                    let option2 = document.createElement('option');
-                    option2.text = rowValue[i];
-                    option2.value = rowValue[i];
-                    let select2 = document.querySelector('.spotName2');
-                    select2.appendChild(option2);
-                    //console.log(select2);
-                    //console.log(option);
-                }
-                if (rowKey[i] == '樂齡學習中心名稱' && rowValue[i]) {
-                    //console.log('key = ' + rowKey[i]);
-                    //console.log('value = ' + rowValue[i]);
-                    let option = document.createElement('option');
-                    option.text = rowValue[i];
-                    option.value = rowValue[i];
-                    let select = document.querySelector('.centerName');
-                    select.appendChild(option);
-                    //select.add(option);
-                    //console.log(select);
+            let optionn2 = document.createElement('option');
+            optionn2.text = json2.樂齡中心資料[i].樂齡學習中心名稱;
+            optionn2.value = json2.樂齡中心資料[i].樂齡學習中心名稱;
+            document.querySelector('.centerName2').appendChild(optionn2);
 
-                    let option1 = document.createElement('option');
-                    option1.text = rowValue[i];
-                    option1.value = rowValue[i];
-                    let select1 = document.querySelector('.centerName1');
-                    select1.appendChild(option1);
-                    //console.log(select1);
+            let option = document.createElement('option');
+            option.text = json2.樂齡中心資料[i].拓點村里;
+            option.value = json2.樂齡中心資料[i].拓點村里;
+            document.querySelector('.spotName').appendChild(option);
 
-                    let option2 = document.createElement('option');
-                    option2.text = rowValue[i];
-                    option2.value = rowValue[i];
-                    let select2 = document.querySelector('.centerName2');
-                    select2.appendChild(option2);
-                    //console.log(select2);
-                    //console.log(option);
-                }
-            }
+            let option1 = document.createElement('option');
+            option1.text = json2.樂齡中心資料[i].拓點村里;
+            option1.value = json2.樂齡中心資料[i].拓點村里;
+            document.querySelector('.spotName1').appendChild(option1);
+
+            let option2 = document.createElement('option');
+            option2.text = json2.樂齡中心資料[i].拓點村里;
+            document.querySelector('.spotName2').appendChild(option2);
         }
     }
 
@@ -469,13 +474,17 @@
         const section2 = document.querySelector('#section2');
         section2.classList.add('fade-out');
         section2.classList.remove('fade-in');
-        setTimeout(function(){ section2.classList.add('hidden') }, 400);
+        setTimeout(function () {
+            section2.classList.add('hidden')
+        }, 300);
 
         const section1 = document.querySelector('#section1');
         section1.classList.add('fade-in');
         section1.classList.remove('fade-out');
 
-        setTimeout(function(){ section1.classList.remove('hidden') }, 500);
+        setTimeout(function () {
+            section1.classList.remove('hidden')
+        }, 400);
 
         //section1.classList.remove('hidden');
         //section2.classList.add('hidden');
@@ -489,18 +498,20 @@
         const section1 = document.querySelector('#section1');
         section1.classList.add('fade-out');
         section1.classList.remove('fade-in');
-        setTimeout(function(){ section1.classList.add('hidden') }, 400);
+        setTimeout(function () {
+            section1.classList.add('hidden')
+        }, 300);
 
         const section2 = document.querySelector('#section2');
         section2.classList.add('fade-in');
         section2.classList.remove('fade-out');
-        setTimeout(function(){ section2.classList.remove('hidden') }, 500);
+        setTimeout(function () {
+            section2.classList.remove('hidden')
+        }, 400);
     }
 
     async function loadHistoryDatatable() {
         console.log('loadHistory');
-
-        //const date = new Date;
         const response = await fetch(`/api/4/today`, {
             method: 'GET'
         });
@@ -513,10 +524,9 @@
             buttons: [
                 'copy', 'csv', 'excel', 'print', 'colvis',
             ],
-            
-            data: json,
-            columns: [
-                {
+
+            data: json.今日簽到紀錄,
+            columns: [{
                     data: '姓名'
                 },
                 {
@@ -546,52 +556,23 @@
             ],
         });
     }
-    
+
     async function reloadHistory() {
         const section2 = document.querySelector('#section2');
         section2.classList.remove('fade-in');
         section2.classList.add('fade-out');
-        setTimeout(function(){ section2.classList.add('hidden') }, 400);
+        setTimeout(function () {
+            section2.classList.add('hidden')
+        }, 400);
 
         await loadHistoryDatatable()
 
         section2.classList.remove('fade-out');
+        section2.classList.remove('hidden')
         section2.classList.add('fade-in');
-        setTimeout(function(){ section2.classList.remove('hidden') }, 500);
-    }
-
-    function getParameters() {
-        const path = pathInput.value.trim();
-
-        const index = methodInput.selectedIndex;
-        const method = methodInput.options[index].value;
-        const options = {
-            method: method
-        };
-
-        const bodyDataContainer = document.querySelector('#key-values');
-        const allRows = bodyDataContainer.querySelectorAll('.body-row');
-        const bodyObj = {};
-        for (let i = 0; i < allRows.length; i++) {
-            const row = allRows[i];
-            const keyInput = row.querySelector('.key').value.trim();
-            const valueInput = row.querySelector('.value').value.trim();
-            if (keyInput && valueInput) {
-                bodyObj[keyInput] = valueInput;
-            }
-        }
-        const bodySize = Object.keys(bodyObj).length;
-        if (bodySize > 0) {
-            options.body = JSON.stringify(bodyObj);
-            options.headers = {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            };
-        }
-        return {
-            path,
-            options
-        };
+        //setTimeout(function () {
+          //  section2.classList.remove('hidden')
+        //}, 500);
     }
 
     const postButton = document.querySelector('#form-value');
